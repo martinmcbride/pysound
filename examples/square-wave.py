@@ -14,13 +14,10 @@ except ImportError:
     import sys, os
     sys.path.insert(0, os.path.abspath(os.path.split(os.path.abspath(__file__))[0]+'/..'))
 
-import numpy as np
-from pysound.params import Params
-from pysound.soundfile import write_wav
-from pysound.constant import constant
-from pysound.wavetable import square_wave
+from pysound.components.soundfile import write_wav
+from pysound.components.wavetable import square_wave
+from pysound.components.wavetable import sine_wave
 
-params = Params()
-
-wave = square_wave(params, constant(params, 400), constant(params, 1), constant(params, 0.5), constant(params, 0))
-write_wav(params, wave, 'test.wav')
+amp = sine_wave(frequency=10, amplitude=0.3, offset = 0.5)
+wave = square_wave(frequency=400, amplitude=amp)
+write_wav(source=wave, filename='test.wav')
