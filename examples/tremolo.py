@@ -3,8 +3,6 @@
 # Copyright (C) 2016, Martin McBride
 # License: MIT
 # Website sympl.org/pysound
-#
-# Square wave example
 
 
 try:
@@ -19,8 +17,8 @@ from pysound.components.wavetable import square_wave
 from pysound.components.wavetable import sine_wave
 
 #
-# Create a tremelo effect
+# Create a tremolo effect
 #
 amp = sine_wave(frequency=10, amplitude=0.1, offset = 0.8)
 wave = square_wave(frequency=400, amplitude=amp)
-write_wav(source=wave, filename='tremelo.wav')
+write_wav(source=wave, filename='tremolo.wav')
