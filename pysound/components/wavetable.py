@@ -11,7 +11,7 @@ import math
 from pysound.buffer import SoundBuffer, get_buffer
 
 def square_wave(rate=11025, duration=1, frequency=400, amplitude=1, ratio=0.5, offset=0):
-    samples = duration*rate;
+    samples = int(duration*rate)
     buffer = SoundBuffer(samples)
     data = buffer.getData()
     t = 0
@@ -26,7 +26,7 @@ def square_wave(rate=11025, duration=1, frequency=400, amplitude=1, ratio=0.5, o
     return buffer
 
 def saw_wave(rate=11025, duration=1, frequency=400, amplitude=1, ratio=0.5, offset=0):
-    samples = duration*rate;
+    samples = int(duration*rate)
     buffer = SoundBuffer(samples)
     data = buffer.getData()
     t = 0
@@ -45,7 +45,7 @@ def saw_wave(rate=11025, duration=1, frequency=400, amplitude=1, ratio=0.5, offs
     return buffer
 
 def sine_wave(rate=11025, duration=1, frequency=400, amplitude=1, ratio=0.5, offset=0):
-    samples = duration*rate;
+    samples = int(duration*rate)
     buffer = SoundBuffer(samples)
     data = buffer.getData()
     t = 0
