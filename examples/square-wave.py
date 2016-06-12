@@ -3,8 +3,6 @@
 # Copyright (C) 2016, Martin McBride
 # License: MIT
 # Website sympl.org/pysound
-#
-# Square wave example
 
 
 try:
@@ -16,8 +14,9 @@ except ImportError:
 
 from pysound.components.soundfile import write_wav
 from pysound.components.wavetable import square_wave
-from pysound.components.wavetable import sine_wave
 
-amp = sine_wave(frequency=10, amplitude=0.3, offset = 0.5)
-wave = square_wave(frequency=400, amplitude=amp)
-write_wav(source=wave, filename='test.wav')
+#
+# Create a simple square wave
+#
+wave = square_wave(frequency=400)
+write_wav(source=wave, filename='square-wave.wav')

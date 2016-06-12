@@ -9,16 +9,17 @@
 import wave
 import array
 
-def write_wav(rate=11025, samples=11025, source=[], filename='temp.wav'):
+def write_wav(rate=11025, source=None, filename='temp.wav'):
     #Set the WAV file parameters, currently default values
     writer = wave.open(filename, 'wb');
     writer.setnchannels(1)
     writer.setsampwidth(2)
     writer.setframerate(rate)
 
-    data = array.array('h')
-    for i in range(samples):
-        data.append(int(source[i]*32767))
-    writer.writeframes(data.tostring())
+    data_in = source.getData()
+    data_out = array.array('h')
+    for i in range(len(source)):
+        data_out.append(int(data_in[i]*32767))
+    writer.writeframes(data_out.tostring())
 
     writer.close()
