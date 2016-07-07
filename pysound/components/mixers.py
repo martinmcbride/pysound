@@ -6,6 +6,7 @@
 
 from pysound.buffer import SoundBuffer, get_buffer
 
+
 #
 # Multiply the source signals together
 #
@@ -13,9 +14,7 @@ def modulator(rate=11025, duration=1, sources=[]):
     samples = int(duration*rate)
     buffer = SoundBuffer(samples)
     data = buffer.getData()
-    signals = []
-    for source in sources:
-        signals.append(get_buffer(samples, source))
+    signals = [get_buffer(samples, source) for source in sources]
     for i in range(samples):
         val = 1
         for signal in signals:
