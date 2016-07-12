@@ -16,10 +16,9 @@ def write_wav(rate=11025, source=None, filename='temp.wav'):
     writer.setsampwidth(2)
     writer.setframerate(rate)
 
-    data_in = source.getData()
     data_out = array.array('h')
-    for i in range(len(source)):
-        data_out.append(int(data_in[i]*32767))
+    for x in source:
+        data_out.append(int(x*32767))
     writer.writeframes(data_out.tostring())
 
     writer.close()

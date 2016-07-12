@@ -4,7 +4,8 @@
 # License: MIT
 # Website sympl.org/pysound
 
-from pysound.buffer import SoundBuffer, get_buffer
+import numpy as np
+from pysound.buffer import get_buffer
 
 
 #
@@ -14,8 +15,7 @@ from pysound.buffer import SoundBuffer, get_buffer
 #
 def attack_decay(rate=11025, duration=1, source=1, attackTime=1):
     samples = int(duration*rate)
-    buffer = SoundBuffer(samples)
-    data = buffer.getData()
+    data = np.zeros(samples)
     d_source = get_buffer(samples, source)
     for i in range(samples):
         t = i/rate
@@ -23,4 +23,4 @@ def attack_decay(rate=11025, duration=1, source=1, attackTime=1):
             data[i] = d_source[i]*t/attackTime
         else:
             data[i] = d_source[i]*(duration-t)/(duration-attackTime)
-    return buffer
+    return data

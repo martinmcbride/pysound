@@ -4,7 +4,8 @@
 # License: MIT
 # Website sympl.org/pysound
 
-from pysound.buffer import SoundBuffer, get_buffer
+import numpy as np
+from pysound.buffer import get_buffer
 
 
 #
@@ -12,12 +13,11 @@ from pysound.buffer import SoundBuffer, get_buffer
 #
 def modulator(rate=11025, duration=1, sources=[]):
     samples = int(duration*rate)
-    buffer = SoundBuffer(samples)
-    data = buffer.getData()
+    data = np.zeros(samples)
     signals = [get_buffer(samples, source) for source in sources]
     for i in range(samples):
         val = 1
         for signal in signals:
             val *= signal[i]
         data[i] = val
-    return buffer
+    return data

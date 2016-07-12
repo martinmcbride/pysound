@@ -8,13 +8,12 @@
 
 import numpy as np
 import math
-from pysound.buffer import SoundBuffer, get_buffer
+from pysound.buffer import get_buffer
 
 
 def square_wave(rate=11025, duration=1, frequency=400, amplitude=1, ratio=0.5, offset=0):
     samples = int(duration*rate)
-    buffer = SoundBuffer(samples)
-    data = buffer.getData()
+    data = np.zeros(samples)
     t = 0
     d_frequency = get_buffer(samples, frequency)
     d_amplitude = get_buffer(samples, amplitude)
@@ -24,13 +23,12 @@ def square_wave(rate=11025, duration=1, frequency=400, amplitude=1, ratio=0.5, o
         t += d_frequency[i]/rate
         t %= 1
         data[i] = d_offset[i] + d_amplitude[i]*(1 if t < d_ratio[i] else -1)
-    return buffer
+    return data
 
 
 def saw_wave(rate=11025, duration=1, frequency=400, amplitude=1, ratio=0.5, offset=0):
     samples = int(duration*rate)
-    buffer = SoundBuffer(samples)
-    data = buffer.getData()
+    data = np.zeros(samples)
     t = 0
     d_frequency = get_buffer(samples, frequency)
     d_amplitude = get_buffer(samples, amplitude)
@@ -44,13 +42,12 @@ def saw_wave(rate=11025, duration=1, frequency=400, amplitude=1, ratio=0.5, offs
         else:
             v = 1 - 2*(t-d_ratio[i])/(1-d_ratio[i])
         data[i] = d_offset[i] + d_amplitude[i]*v
-    return buffer
+    return data
 
 
 def sine_wave(rate=11025, duration=1, frequency=400, amplitude=1, ratio=0.5, offset=0):
     samples = int(duration*rate)
-    buffer = SoundBuffer(samples)
-    data = buffer.getData()
+    data = np.zeros(samples)
     t = 0
     d_frequency = get_buffer(samples, frequency)
     d_amplitude = get_buffer(samples, amplitude)
@@ -59,5 +56,5 @@ def sine_wave(rate=11025, duration=1, frequency=400, amplitude=1, ratio=0.5, off
         t += d_frequency[i]/rate
         t %= 1
         data[i] = d_offset[i] + d_amplitude[i]*math.sin(t*2*math.pi)
-    return buffer
+    return data
 
