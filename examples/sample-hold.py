@@ -12,10 +12,11 @@ except ImportError:
     import sys, os
     sys.path.insert(0, os.path.abspath(os.path.split(os.path.abspath(__file__))[0]+'/..'))
 
-from pysound.components.soundfile import write_wav
-from pysound.components.wavetable import sine_wave
-from pysound.components.wavetable import square_wave
-from pysound.components.sequencers import sample_and_hold
+from pysound.sequencers import sample_and_hold
+from pysound.wavetable import sine_wave
+from pysound.wavetable import square_wave
+
+from pysound.soundfile import write_wav
 
 #
 # use sample and hold to vary frequency

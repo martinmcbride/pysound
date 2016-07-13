@@ -12,9 +12,10 @@ except ImportError:
     import sys, os
     sys.path.insert(0, os.path.abspath(os.path.split(os.path.abspath(__file__))[0]+'/..'))
 
-from pysound.components.soundfile import write_wav
-from pysound.components.wavetable import saw_wave
-from pysound.components.envelopes import attack_decay
+from pysound.soundfile import write_wav
+from pysound.wavetable import saw_wave
+
+from pysound.envelopes import attack_decay
 
 #
 # Create an attack/decay envelope
