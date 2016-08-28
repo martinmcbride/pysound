@@ -32,5 +32,5 @@ seq = [
     (w1, 2)
 ]
 
-wave = sequencer(inputs=seq, duration=3)
+wave = sequencer(inputs=seq)
 write_wav(source=wave, filename='sequencer.wav')

@@ -5,7 +5,7 @@
 # Website sympl.org/pysound
 
 import numpy as np
-from pysound.buffer import get_buffer
+from pysound.buffer import get_buffer, is_buffer_signal, get_signal_length
 
 
 #
@@ -13,16 +13,28 @@ from pysound.buffer import get_buffer
 # Each input consists of a tuple pair:
 #  - source (SoundBuffer)
 #  - start time (seconds)
-# Input signals are added together to create the output, with ex#ach signal delayed acording to its start
-# time. Signals can overlap. Any signals which extend beyond the sequencer duration are truncated.
+# Input signals are added together to create the output, with each signal delayed according to its start
+# time. Signals can overlap.
+#
+# The output signal will be extended to fit all the supplied input signals
 #
 def sequencer(rate=11025, duration=1, inputs=[]):
+    # Calculate the total number of output samples. This will be *at least* duration*rate,
+    # but may be more if any input signals extend beyond that.
     samples = int(duration * rate)
+    for source, start in inputs:
+        if is_buffer_signal(source):
+            end = int(start * rate) + get_signal_length(source)
+            if end > samples:
+                samples = end;
+        else:
+            raise TypeError('sequencer sources cannot be constants')
+
     data = np.zeros(samples)
     for source, start in inputs:
         start_sample = int(start * rate)
-        signal = get_buffer(source, source)
-        transfer_samples = min(len(signal), samples - start_sample - 1)
+        transfer_samples = get_signal_length(source)
+        signal = get_buffer(transfer_samples, source)
         for i in range(transfer_samples):
             data[i + start_sample] += signal[i]
 
