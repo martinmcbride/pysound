@@ -22,5 +22,5 @@ from pysound.envelopes import attack_decay
 #
 
 wave = saw_wave(frequency=400)
-out = attack_decay(duration = 0.3, attackTime = 0.01, source=wave)
+out = attack_decay(duration = 0.3, attack_time= 0.01, source=wave)
 write_wav(source=out, filename='attack-decay.wav')
