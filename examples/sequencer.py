@@ -14,15 +14,16 @@ except ImportError:
 
 from pysound.sequencers import sequencer
 from pysound.wavetable import square_wave
+from pysound.music import Notes
 
 from pysound.soundfile import write_wav
 
 #
 # Create a sequence
 #
-w1 = square_wave(frequency=400, duration=1)
-w2 = square_wave(frequency=500, duration=0.5)
-w3 = square_wave(frequency=600, duration=0.5)
+w1 = square_wave(frequency=Notes.A4, duration=1, amplitude=0.5)
+w2 = square_wave(frequency=Notes.C4, duration=1, amplitude=0.5)
+w3 = square_wave(frequency=Notes.E4, duration=1, amplitude=0.5)
 
 seq = [
     (w1, 0),
