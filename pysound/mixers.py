@@ -25,13 +25,14 @@ def modulator(rate=11025, duration=1, sources=[]):
 #
 # Add the source signals together
 #
-def adder(rate=11025, duration=1, sources=[]):
+def adder(rate=11025, duration=1, sources=[], amplitude=1):
     samples = int(duration*rate)
     data = np.zeros(samples)
+    d_amplitude = get_buffer(samples, amplitude)
     signals = [get_buffer(samples, source) for source in sources]
     for i in range(samples):
         val = 0
         for signal in signals:
             val += signal[i]
-        data[i] = val
+        data[i] = val*d_amplitude[i]
     return data
