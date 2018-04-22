@@ -6,7 +6,7 @@
 from _operator import mul, add
 from functools import reduce
 
-def modulator(rate=11025, sources=[]):
+def modulator(sources=[]):
     '''
     Multiply the source signals together
     rate - sample rate
@@ -16,7 +16,7 @@ def modulator(rate=11025, sources=[]):
         for values in zip(*sources):
             yield reduce(mul, values, 1)
             
-def adder(rate=11025, sources=[]):
+def adder(sources=[]):
     '''
     Add the source signals together
     rate - sample rate

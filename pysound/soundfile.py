@@ -5,6 +5,7 @@
 
 import wave
 import array
+from const import glob
 
 '''
 Write a sequence of samples as a WAV file
@@ -12,14 +13,15 @@ Currently a 16 bit mono file
 '''
 class SoundFile:
     
-    def __init__(self, filename='temp.wav', rate=11025):
+    def __init__(self, filename='temp.wav', settings=glob):
         self.writer = wave.open(filename, 'wb');
+        self.settings = settings
         # Set the WAV file parameters, currently default values
         self.writer.setnchannels(1)
         self.writer.setsampwidth(2)
-        self.writer.setframerate(rate)
+        self.writer.setframerate(settings.sample_rate)
 
-    def write(self, source, samples=11025):
+    def write(self, source, samples=11075):
         data_out = array.array('h')
         for i, x in zip(range(samples), source):
             data_out.append(int(x * 32767))
