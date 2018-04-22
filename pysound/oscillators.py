@@ -4,7 +4,7 @@
 # License: MIT
 
 import math
-from pysound.const import const
+from const import const
 
 def square_wave(rate=11025, frequency=const(400), amplitude=const(1),
                 offset=const(0), ratio=const(0.5)):
