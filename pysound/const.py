@@ -4,11 +4,22 @@ Global settings used by all modules
 '''
 class Settings:
     
+    instance = None
+    
     def __init__(self):
         self.sample_rate = 11025
+        
+    def time2samples(self, time):
+        return int(time*self.sample_rate)
 
-# The global settings object    
-glob = Settings()
+SETTINGS = Settings()
+
+def get_settings(settings):
+    return settings if settings else SETTINGS
+
+def t2s(time, settings=None):
+    settings = get_settings(settings);
+    return settings.time2samples(time)
 
 def const(value=0.0):
     '''
