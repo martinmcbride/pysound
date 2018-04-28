@@ -39,7 +39,7 @@ def attack_decay(settings=None, duration=1, attack_time=0.5, min=0, max=1, repea
     while not done:
         samples = t2s(duration, settings)
         for i in range(samples):
-            t = i/samples
+            t = duration*i/samples
             if t < attack_time:
                 yield min + (max-min)*t / attack_time
             else:
