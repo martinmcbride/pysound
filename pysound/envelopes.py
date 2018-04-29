@@ -12,7 +12,7 @@ def ramp(settings=None, duration=1, start=0, end=1, repeat=False):
     duration - sound duration in seconds
     start - initial value of signal
     end - final value of signal
-    repeat - if true the signal repeats, otherwise signal is zero afterwards
+    repeat - if true the signal repeats, otherwise signal is end value afterwards
     '''
     settings = get_settings(settings)
     done = False
@@ -23,6 +23,9 @@ def ramp(settings=None, duration=1, start=0, end=1, repeat=False):
             yield start + (end-start)*t
         if not repeat:
             done = True
+            
+    while True:
+        yield end
 
 def attack_decay(settings=None, duration=1, attack_time=0.5, min=0, max=1, repeat=False):
     '''
@@ -32,7 +35,7 @@ def attack_decay(settings=None, duration=1, attack_time=0.5, min=0, max=1, repea
     duration - sound duration in seconds
     start - initial value of signal
     end - final value of signal
-    repeat - if true the signal repeats, otherwise signal is zero afterwards
+    repeat - if true the signal repeats, otherwise signal is min value afterwards
     '''
     settings = get_settings(settings)
     done = False
@@ -46,3 +49,6 @@ def attack_decay(settings=None, duration=1, attack_time=0.5, min=0, max=1, repea
                 yield min + (max-min)*(duration-t)/(duration - attack_time)
             if not repeat:
                 done = True
+                
+    while True:
+        yield min
