@@ -74,7 +74,7 @@ def create_buffer(params, value):
         fv = float(value)
         return np.full(params.length, fv, np.float)
     except TypeError:
-        if instanceof(value, numpy):
+        if isinstance(value, np.ndarray):
             if (len(value)>=params.length):
                 return value
         raise TypeError('Value must be a float or a numpy array ofthe required length')
