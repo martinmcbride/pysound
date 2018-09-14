@@ -18,6 +18,6 @@ def save(params, filename, source):
     writer.setframerate(params.sample_rate)
     data_out = array.array('h')
     for x in source:
-        data_out.append(int(x * 16384))
+        data_out.append(int(x * 32766))
     writer.writeframes(data_out.tostring())
     writer.close()
