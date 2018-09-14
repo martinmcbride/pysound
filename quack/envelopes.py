@@ -3,52 +3,32 @@
 # Copyright (C) 2018, Martin McBride
 # License: MIT
 
-from const import get_settings, t2s
+import numpy as np
 
-def ramp(settings=None, duration=1, start=0, end=1, repeat=False):
+def linseg(params, start=0, end=1):
     '''
     Signal starts at start value, ramps linearly up to end value
-    rate - sample rate
-    duration - sound duration in seconds
-    start - initial value of signal
-    end - final value of signal
-    repeat - if true the signal repeats, otherwise signal is end value afterwards
+    :param params: buffer parameters, controls length of signal created
+    :param start: start value (number)
+    :param end: end value (number)
+    :return: array of resulting signal
     '''
-    settings = get_settings(settings)
-    done = False
-    while not done:
-        samples = int(duration*settings.sample_rate)
-        for i in range(samples):
-            t = i/samples
-            yield start + (end-start)*t
-        if not repeat:
-            done = True
-            
-    while True:
-        yield end
+    return np.linspace(start, end, num=params.length, endpoint=True)
 
-def attack_decay(settings=None, duration=1, attack_time=0.5, min=0, max=1, repeat=False):
+def attack_decay(params, attack, start=0, peak=1):
     '''
     Signal starts at min value, ramps linearly up to max value during the
-    attack time, than ramps back down to min value over remaining time 
-    rate - sample rate
-    duration - sound duration in seconds
-    start - initial value of signal
-    end - final value of signal
-    repeat - if true the signal repeats, otherwise signal is min value afterwards
+    attack time, than ramps back down to min value over remaining time
+    :param params: buffer parameters, controls length of signal created
+    :param attack: attack time, in samples
+    :param start: start value (number)
+    :param peak: peak value (number)
+    :return:
     '''
-    settings = get_settings(settings)
-    done = False
-    while not done:
-        samples = t2s(duration, settings)
-        for i in range(samples):
-            t = duration*i/samples
-            if t < attack_time:
-                yield min + (max-min)*t / attack_time
-            else:
-                yield min + (max-min)*(duration-t)/(duration - attack_time)
-            if not repeat:
-                done = True
-                
-    while True:
-        yield min
+    if attack >= params.length:
+        # Envelope is attack only
+        return np.linspace(start, peak*params.length/attack, num=params.length, endpoint=True)
+    # Envelope is attack-decay
+    attack_signal = np.linspace(start, peak, num=attack, endpoint=False)
+    decay_signal = np.linspace(peak, start, num=params.length-attack, endpoint=True)
+    return np.concatenate((attack_signal, decay_signal))

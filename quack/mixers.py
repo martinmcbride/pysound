@@ -3,25 +3,21 @@
 # Copyright (C) 2018, Martin McBride
 # License: MIT
 
-from _operator import mul, add
+import numpy as np
 from functools import reduce
 
 def modulator(sources=[]):
     '''
-    Multiply the source signals together
-    rate - sample rate
-    sources - list of sources (iterables)
+    Multiply all sources
+    :param sources: list of arrays, must all be same length
+    :return:
     '''
-    if sources:
-        for values in zip(*sources):
-            yield reduce(mul, values, 1)
+    return reduce(np.multiply, sources)
             
 def adder(sources=[]):
     '''
-    Add the source signals together
-    rate - sample rate
-    sources - list of sources (iterables)
+    Multiply all sources
+    :param sources: list of arrays, must all be same length
+    :return:
     '''
-    if sources:
-        for values in zip(*sources):
-            yield reduce(add, values, 1)
+    return reduce(np.add, sources)
