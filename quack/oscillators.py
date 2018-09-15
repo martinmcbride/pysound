@@ -5,11 +5,8 @@
 
 import math
 import numpy as np
-from quack import buffer
 from quack.buffer import create_buffer
 
-SINE_TABLE = None
-SINE_TABLE_SIZE = 16386
 
 def create_sine_table(size):
     args = np.linspace(0.0, 2*math.pi, num=size, endpoint=False)

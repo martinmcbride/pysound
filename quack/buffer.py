@@ -12,32 +12,24 @@ class BufferParams:
     Length and sample rate of a buffer
     '''
     
-    def __init__(self, sample_rate=11025):
+    def __init__(self, value=None):
         '''
         Create parameters
-        The length will be set equal to the sample rate, giving a 1 second sound by default
-        :param sample_rate: sample rate to use, defaults to 11025
+        :param value: sample rate to use, defaults to 11025
+        If value is a BufferParams, copy its parameters
+        If value is a number, set the sample rate to that value and set the length to the same value
+        (giving a one second timeframe)
+        If no value, set to 1 second at 44100 smaple rate
         '''
-        self.length = sample_rate
-        self.sample_rate = sample_rate
-
-    def copy(self):
-        '''
-        Create new parameters based on self
-        :return: new params object
-        '''
-        new = BufferParams(self.sample_rate)
-        new.length = self.length
-        return new
-
-    def like(other):
-        '''
-        Create new parameters based on other
-        :return: new params object
-        '''
-        new = BufferParams(other.sample_rate)
-        new.length = other.length
-        return new
+        if isinstance(value, BufferParams):
+            self.sample_rate = value.sample_rate
+            self.length = value.length
+        elif value == None:
+            self.sample_rate = 44100
+            self.length = self.sample_rate
+        else:
+            self.sample_rate = int(value)
+            self.length = self.sample_rate
 
     def time(self, time):
         '''
@@ -47,7 +39,7 @@ class BufferParams:
         '''
         self.length = int(time*self.sample_rate)
         return self
-        
+
     def samples(self, length):
         '''
         Update the length of the buffer in samples
@@ -56,8 +48,7 @@ class BufferParams:
         '''
         self.length = length
         return self
-        
-    
+
     def t2s(self, time):
         '''
         Converts a unit of time (in seconds) to a sample count
