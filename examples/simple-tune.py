@@ -1,0 +1,25 @@
+from quack import buffer
+from quack import soundfile
+from quack import oscillators
+from quack import envelopes
+from quack import mixers
+from quack import const
+
+def simple_instr(params, frequency):
+    env = envelopes.attack_decay(params, attack=params.t2s(0.05))
+    tone = oscillators.saw_wave(params, frequency=frequency, amplitude=env)
+    return tone
+
+params = buffer.BufferParams().set_time(4).set_tempo(120)
+beatp = buffer.BufferParams(params).set_length(params.b2s(1))
+beat = beatp.length;
+data = mixers.sequencer(params,
+                        [(simple_instr(beatp, const.Notes.C4), 0),
+                         (simple_instr(beatp, const.Notes.D4), beat),
+                         (simple_instr(beatp, const.Notes.E4), beat*2),
+                         (simple_instr(beatp, const.Notes.F4), beat*3),
+                         (simple_instr(beatp, const.Notes.G4), beat*4),
+                         (simple_instr(beatp, const.Notes.A4), beat*5),
+                         (simple_instr(beatp, const.Notes.B4), beat*6),
+                         ])
+soundfile.save(params, '/tmp/test.wav', data)
