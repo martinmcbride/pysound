@@ -52,6 +52,19 @@ def saw_wave(params, frequency=400, amplitude=1,
     output = offset + amplitude * np.where(phase < ratio, -1 + 2*phase/ratio, 1 - 2*(phase-ratio)/(1-ratio))
     return output
 
+def noise(params, amplitude=1, offset=0):
+    '''
+    Generate a noise signal
+    :param params: buffer parameters, controls length of signal created
+    :param amplitude: wave amplitude (array or value)
+    :param offset: offset of wave mean from zero (array or value)
+    :return: array of resulting signal
+    '''
+    amplitude = create_buffer(params, amplitude)
+    offset = create_buffer(params, offset)
+    output = offset + amplitude * (np.random.random(params.length)*2 - 1)
+    return output
+
 def table_wave(params, frequency=400, amplitude=1,
                 offset=0, table=None):
     '''
