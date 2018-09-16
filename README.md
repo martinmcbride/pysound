@@ -1,3 +1,5 @@
 # quack
 
-A Python library for creating digital sound. Mainly intended to allow creation of experimental instruments, sounds and music.
+A Python library for creating digital sound and music.
+
+[Main website](http://www.martinmcbride.org/Quack_tutorial)
