@@ -32,7 +32,7 @@ class BufferParams:
             self.length = self.sample_rate
         self.tempo = 60
 
-    def time(self, time):
+    def set_time(self, time):
         '''
         Update the length of the buffer in seconds
         :param time: number of seconds
@@ -41,13 +41,22 @@ class BufferParams:
         self.length = int(time*self.sample_rate)
         return self
 
-   def bpm(self, bpm):
+    def set_length(self, length):
         '''
         Update the length of the buffer in samples
         :param length: number of samples
         :return: self
         '''
-        self.tempo = bpm
+        self.length = length
+        return self
+
+    def set_tempo(self, tempo):
+        '''
+        Update the length of the buffer in samples
+        :param tempo: beats per minute
+        :return: self
+        '''
+        self.tempo = tempo
         return self
 
     def t2s(self, time):
@@ -58,9 +67,9 @@ class BufferParams:
 
     def b2s(self, beats):
         '''
-        Converts a number of beat to a sample count
+        Converts a number of beats to a sample count
         '''
-        return int(beats*60/self.tempo)
+        return int(beats*60*self.sample_rate/self.tempo)
 
 def create_buffer(params, value):
     '''
