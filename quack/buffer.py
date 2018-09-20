@@ -24,13 +24,15 @@ class BufferParams:
         if isinstance(value, BufferParams):
             self.sample_rate = value.sample_rate
             self.length = value.length
+            self.tempo = value.tempo
         elif value == None:
             self.sample_rate = 44100
             self.length = self.sample_rate
+            self.tempo = 60
         else:
             self.sample_rate = int(value)
             self.length = self.sample_rate
-        self.tempo = 60
+            self.tempo = 60
 
     def set_time(self, time):
         '''

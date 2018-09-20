@@ -15,26 +15,11 @@ def linseg(params, start=0, end=1):
     '''
     return np.linspace(start, end, num=params.length, endpoint=True)
 
-def attack_decay(params, attack, start=0, peak=1):
-    '''
-    Signal starts at min value, ramps linearly up to max value during the
-    attack time, than ramps back down to min value over remaining time
-    :param params: buffer parameters, controls length of signal created
-    :param attack: attack time, in samples
-    :param start: start value (number)
-    :param peak: peak value (number)
-    :return:
-    '''
-    if attack >= params.length:
-        # Envelope is attack only
-        return np.linspace(start, peak*params.length/attack, num=params.length, endpoint=True, dtype=np.float)
-    # Envelope is attack-decay
-    attack_signal = np.linspace(start, peak, num=attack, endpoint=False, dtype=np.float)
-    decay_signal = np.linspace(peak, start, num=params.length-attack, endpoint=True, dtype=np.float)
-    return np.concatenate((attack_signal, decay_signal))
-
 
 class GenericEnvelope:
+    '''
+    Generic envelope builder
+    '''
 
     def __init__(self, params):
         self.params = params
@@ -43,6 +28,12 @@ class GenericEnvelope:
         self.pos = 0
 
     def set(self, value, samples=0):
+        '''
+        Set the current value and optionally maintain it for a period
+        :param value: New current value
+        :param samples: Add current value for this number of samples (if not zero)
+        :return:
+        '''
         if self.params.length > self.pos and samples > 0:
             len = min(samples, self.params.length-self.pos)
             self.data[self.pos:self.pos+len] = np.full(len, value, dtype=np.float)
@@ -51,6 +42,13 @@ class GenericEnvelope:
         return self
 
     def linseg(self, value, samples):
+        '''
+        Create a linear section moving from current value to new value over acertain number of
+        samples.
+        :param value: New value
+        :param samples: Length of segment in samples
+        :return:
+        '''
         if self.params.length > self.pos and samples > 0:
             len = min(samples, self.params.length - self.pos)
             end = value if len == samples else self.latest + (value - self.latest)*len/samples
@@ -61,3 +59,22 @@ class GenericEnvelope:
 
     def build(self):
         return self.data
+
+
+def attack_decay(params, attack, start=0, peak=1):
+    '''
+    Signal starts at min value, ramps linearly up to max value during the
+    attack time, than ramps back down to min value over remaining time
+    :param params: buffer parameters, controls length of signal created
+    :param attack: attack time, in samples
+    :param start: start value (number)
+    :param peak: peak value (number)
+    :return:
+    '''
+    builder = GenericEnvelope(params)
+    builder.set(start)
+    builder.linseg(peak, attack)
+    if attack < params.length:
+        builder.linseg(start, params.length - attack)
+    return builder.build()
+
