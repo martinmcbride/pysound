@@ -95,6 +95,16 @@ src - the data to be inserted
 at - position (in samples) to insert the data
 '''
 def insert_array(dest, src, at):
-    len = src.size
-    dest[at:at+len] = np.add(dest[at:at+len],src) 
+    destlen = dest.size
+    srclen = src.size
+    if at < 0:                   #Before start
+        return
+    if at > destlen:             #After end
+        return
+    length = srclen
+    if at + srclen > destlen:
+        length -= at + srctlen - destlen
+    if length <= 0:
+        return
+    dest[at:at+length] = np.add(dest[at:at+length], src[:length])
             
