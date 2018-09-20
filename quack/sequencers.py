@@ -7,7 +7,7 @@ from quack import buffer
 import numpy as np
 
 
-def join(*buffers):
+def join(buffers):
     return np.concatenate(buffers)
 
 class BasicSequence:
