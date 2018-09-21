@@ -5,7 +5,7 @@
 
 import math
 import numpy as np
-from quack.buffer import create_buffer
+from pysound.buffer import create_buffer
 
 
 def echo(params, source, delay, strength):

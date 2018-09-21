@@ -1,8 +1,8 @@
-from quack import buffer
-from quack import soundfile
-from quack import oscillators
-from quack import sequencers
-from quack.const import Notes as N
+from pysound import buffer
+from pysound import soundfile
+from pysound import oscillators
+from pysound import sequencers
+from pysound.const import Notes as N
 
 params = buffer.BufferParams().set_time(1)
 data1 = oscillators.sine_wave(params, frequency=N.C4)

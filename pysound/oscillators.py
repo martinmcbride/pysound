@@ -5,7 +5,7 @@
 
 import math
 import numpy as np
-from quack.buffer import create_buffer
+from pysound.buffer import create_buffer
 
 
 def create_sine_table(size):

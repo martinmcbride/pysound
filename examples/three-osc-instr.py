@@ -1,9 +1,9 @@
-from quack import buffer
-from quack import soundfile
-from quack import oscillators
-from quack import envelopes
-from quack import mixers
-from quack import const
+from pysound import buffer
+from pysound import soundfile
+from pysound import oscillators
+from pysound import envelopes
+from pysound import mixers
+from pysound import const
 
 def three_osc_instr(params, frequency, detune1, detune2):
     tone1 = oscillators.saw_wave(params, frequency=frequency)

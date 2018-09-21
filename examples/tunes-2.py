@@ -1,8 +1,8 @@
-from quack import buffer
-from quack import soundfile
-from quack import oscillators
-from quack import sequencers
-from quack.const import Notes as N
+from pysound import buffer
+from pysound import soundfile
+from pysound import oscillators
+from pysound import sequencers
+from pysound.const import Notes as N
 
 params = buffer.BufferParams().set_time(1)
 notes = [N.C4, N.D4, N.E4, N.F4, N.G4, N.A4, N.B4, N.C5]

@@ -1,7 +1,7 @@
-from quack import buffer
-from quack import soundfile
-from quack import oscillators
-from quack import envelopes
+from pysound import buffer
+from pysound import soundfile
+from pysound import oscillators
+from pysound import envelopes
 
 
 params = buffer.BufferParams().set_time(1)

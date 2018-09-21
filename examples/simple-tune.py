@@ -1,9 +1,9 @@
-from quack import buffer
-from quack import soundfile
-from quack import oscillators
-from quack import envelopes
-from quack import mixers
-from quack import const
+from pysound import buffer
+from pysound import soundfile
+from pysound import oscillators
+from pysound import envelopes
+from pysound import mixers
+from pysound import const
 
 def simple_instr(params, frequency):
     env = envelopes.attack_decay(params, attack=params.t2s(0.05))

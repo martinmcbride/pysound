@@ -3,7 +3,7 @@
 # Copyright (C) 2018, Martin McBride
 # License: MIT
 
-from quack import buffer
+from pysound import buffer
 import numpy as np
 
 
