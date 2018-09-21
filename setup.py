@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
  
 setup(name='pysound',
-      version='0.0',
+      version='0.1',
       url='https://github.com/martinmcbride/pysound',
       license='MIT',
       author='Martin McBride',
