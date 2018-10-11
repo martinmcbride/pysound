@@ -98,3 +98,17 @@ def sine_wave(params, frequency=400, amplitude=1, offset=0):
     :return: array of resulting signal
     '''
     return table_wave(params, frequency, amplitude, offset)
+
+def midi2f(params, midi=69):
+    '''
+    Convert a midi value to a frequency.
+    Midi value 69 corresponds to A4 (440Hz). Changing the midi value by 1 corresponds to
+    one semitone
+    :param params: buffer parameters, controls length of signal created
+    :param midi: midi value
+    :return: array of resulting frequency
+    '''
+    midi = create_buffer(params, midi)
+    output = 2**((midi - 69)/12)*440
+    return output
+
