@@ -35,10 +35,22 @@ class GenericEnvelope:
         :return:
         '''
         if self.params.length > self.pos and samples > 0:
-            len = min(samples, self.params.length-self.pos)
-            self.data[self.pos:self.pos+len] = np.full(len, value, dtype=np.float)
-            self.pos += len
+            l = min(samples, self.params.length-self.pos)
+            self.data[self.pos:self.pos+l] = np.full(l, value, dtype=np.float)
+            self.pos += l
         self.latest = value
+        return self
+
+    def hold(self, samples):
+        '''
+        Hold the previous value for a period
+        :param samples: Add previous value for this number of samples
+        :return:
+        '''
+        if self.params.length > self.pos and samples > 0:
+            l = min(samples, self.params.length-self.pos)
+            self.data[self.pos:self.pos+l] = np.full(l, self.latest, dtype=np.float)
+            self.pos += l
         return self
 
     def linseg(self, value, samples):
@@ -58,6 +70,9 @@ class GenericEnvelope:
         return self
 
     def build(self):
+        if self.params.length > self.pos:
+            l = self.params.length-self.pos
+            self.data[self.pos:self.pos+l] = np.full(l, self.latest, dtype=np.float)
         return self.data
 
 
