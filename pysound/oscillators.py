@@ -87,6 +87,38 @@ def table_wave(params, frequency=400, amplitude=1,
     output = offset + amplitude * table[index]
     return output
 
+def sync_table_wave(params, sync, frequency=400, amplitude=1,
+                offset=0, table=None):
+    '''
+    Generate a wave from a wavetable, syncing with negative going transions of sync signal
+    :param params: buffer parameters, controls length of signal created
+    :param sync: sync signal
+    :param frequency: wave frequency (array or value)
+    :param amplitude: wave amplitude (array or value)
+    :param offset: offset of wave mean from zero (array or value)
+    :param table: table of values representing one full cycle of the waveform. Nominally the values
+     should be between +/-1 (array). The array can be any size.
+    :return: array of resulting signal
+    '''
+    if not table:
+        table = create_sine_table(65536)
+    size = table.size
+    sync = create_buffer(params, sync)
+    frequency = create_buffer(params, frequency)
+    amplitude = create_buffer(params, amplitude)
+    offset = create_buffer(params, offset)
+    output = create_buffer(params, 0)
+    index = 0
+    for i in range(1, params.length):
+        if sync[i-1]>=0 and sync[i]<0:
+            index = 0
+        print(index)
+        output[i] = table[index]
+        index = index + (frequency[i] / params.sample_rate) * size
+        print(index)
+        index = int(index % size)
+    return output*amplitude
+
 def sine_wave(params, frequency=400, amplitude=1, offset=0):
     '''
     Generate a sine wave

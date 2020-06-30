@@ -88,13 +88,13 @@ def create_buffer(params, value):
                 return value
         raise TypeError('Value must be a float or a numpy array ofthe required length')
 
-'''
-Mix an array into another at a certain point
-dest - the main buffer
-src - the data to be inserted
-at - position (in samples) to insert the data
-'''
 def insert_array(dest, src, at):
+    '''
+    Mix an array into another at a certain point
+    dest - the main buffer
+    src - the data to be inserted
+    at - position (in samples) to insert the data
+    '''
     destlen = dest.size
     srclen = src.size
     if at < 0:                   #Before start
@@ -103,7 +103,7 @@ def insert_array(dest, src, at):
         return
     length = srclen
     if at + srclen > destlen:
-        length -= at + srctlen - destlen
+        length -= at + srclen - destlen
     if length <= 0:
         return
     dest[at:at+length] = np.add(dest[at:at+length], src[:length])
