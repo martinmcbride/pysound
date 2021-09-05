@@ -8,35 +8,35 @@ class TestBuffer(unittest.TestCase):
     # Create default buffer params
     def test_bufferparams_default_constructor(self):
         params = BufferParams()
-        self.assertEqual(params.sample_rate, 44100)
-        self.assertEqual(params.length, 44100)
+        self.assertEqual(params.get_sample_rate(), 44100)
+        self.assertEqual(params.get_length(), 44100)
 
     # Create non-default buffer params
     def test_bufferparams_non_default_constructor(self):
         params = BufferParams(length=1000, sample_rate=3000)
-        self.assertEqual(params.sample_rate, 3000)
-        self.assertEqual(params.length, 1000)
+        self.assertEqual(params.get_sample_rate(), 3000)
+        self.assertEqual(params.get_length(), 1000)
 
     # Change length
     def test_bufferparams_with_length(self):
         params = BufferParams()
         params = params.with_length(2000)
-        self.assertEqual(params.sample_rate, 44100)
-        self.assertEqual(params.length, 2000)
+        self.assertEqual(params.get_sample_rate(), 44100)
+        self.assertEqual(params.get_length(), 2000)
 
     # Change duration
     def test_bufferparams_with_duration(self):
         params = BufferParams()
         params = params.with_duration(1.5)
-        self.assertEqual(params.sample_rate, 44100)
-        self.assertEqual(params.length, 66150)
+        self.assertEqual(params.get_sample_rate(), 44100)
+        self.assertEqual(params.get_length(), 66150)
 
     # Change sample_rate
     def test_bufferparams_with_sample_rate(self):
         params = BufferParams()
         params = params.with_sample_rate(8000)
-        self.assertEqual(params.sample_rate, 8000)
-        self.assertEqual(params.length, 44100)
+        self.assertEqual(params.get_sample_rate(), 8000)
+        self.assertEqual(params.get_length(), 44100)
 
     # Test time to samples
     def test_t2s(self):

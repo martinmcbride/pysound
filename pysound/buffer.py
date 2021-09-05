@@ -65,15 +65,15 @@ def create_buffer(params, value=0.0):
     Otherwise throw a type error
     '''
     if isinstance(value, np.ndarray):
-        buffer = np.full(params.length, 0.0, np.float)
-        if params.length <= value.shape[0]:
-            buffer[:] = value[:params.length]
+        buffer = np.full(params.get_length(), 0.0, np.float)
+        if params.get_length() <= value.shape[0]:
+            buffer[:] = value[:params.get_length()]
         else:
             buffer[:value.shape[0]] = value[:]
         return buffer
     try:
         fv = float(value)
-        return np.full(params.length, fv, np.float)
+        return np.full(params.get_length(), fv, np.float)
     except TypeError:
         raise TypeError('Value must be a float or a numpy array')
 
