@@ -12,83 +12,72 @@ class BufferParams:
     Length and sample rate of a buffer
     '''
     
-    def __init__(self, value=None):
+    def __init__(self, length=44100, sample_rate=44100):
         '''
-        Create parameters
-        :param value: sample rate to use, defaults to 11025
-        If value is a BufferParams, copy its parameters
-        If value is a number, set the sample rate to that value and set the length to the same value
-        (giving a one second timeframe)
-        If no value, set to 1 second at 44100 smaple rate
+        Create a BufferParams
+        :param length: Length of buffer in samples
+        :param sample_rate: Number of samples per second
         '''
-        if isinstance(value, BufferParams):
-            self.sample_rate = value.sample_rate
-            self.length = value.length
-            self.tempo = value.tempo
-        elif value == None:
-            self.sample_rate = 44100
-            self.length = self.sample_rate
-            self.tempo = 60
-        else:
-            self.sample_rate = int(value)
-            self.length = self.sample_rate
-            self.tempo = 60
+        self._sample_rate = sample_rate
+        self._length = length
 
-    def set_time(self, time):
+    def with_duration(self, time):
         '''
-        Update the length of the buffer in seconds
-        :param time: number of seconds
-        :return: self
+        Factory method, create a new BufferParams with different duration
+        :param length:
+        :return:
         '''
-        self.length = int(time*self.sample_rate)
-        return self
+        return BufferParams(self.t2s(time), self._sample_rate)
 
-    def set_length(self, length):
+    def with_length(self, length):
         '''
-        Update the length of the buffer in samples
-        :param length: number of samples
-        :return: self
+        Factory method, create a new BufferParams with different length
+        :param length:
+        :return:
         '''
-        self.length = length
-        return self
+        return BufferParams(length, self._sample_rate)
 
-    def set_tempo(self, tempo):
+    def with_sample_rate(self, sample_rate):
         '''
-        Update the length of the buffer in samples
-        :param tempo: beats per minute
-        :return: self
+        Factory method, create a new BufferParams with different sample_rate
+        :param sample_rate:
+        :return:
         '''
-        self.tempo = tempo
-        return self
+        return BufferParams(self._length, sample_rate)
 
     def t2s(self, time):
         '''
         Converts a unit of time (in seconds) to a sample count
         '''
-        return int(time*self.sample_rate)
+        return int(time*self._sample_rate)
 
-    def b2s(self, beats):
-        '''
-        Converts a number of beats to a sample count
-        '''
-        return int(beats*60*self.sample_rate/self.tempo)
+    def get_length(self):
+        return self._length
 
-def create_buffer(params, value):
+    def get_sample_rate(self):
+        return self._sample_rate
+
+
+def create_buffer(params, value=0.0):
     '''
     If the value is a float, create a numpy array of the required length, filled with value
-    If the value is a numpy array, check its length
+    If the value is a numpy array, copy it up to the maximum size.
     Otherwise throw a type error
     '''
+    if isinstance(value, np.ndarray):
+        buffer = np.full(params.length, 0.0, np.float)
+        if params.length <= value.shape[0]:
+            buffer[:] = value[:params.length]
+        else:
+            buffer[:value.shape[0]] = value[:]
+        return buffer
     try:
         fv = float(value)
         return np.full(params.length, fv, np.float)
     except TypeError:
-        if isinstance(value, np.ndarray):
-            if (len(value)>=params.length):
-                return value
-        raise TypeError('Value must be a float or a numpy array ofthe required length')
+        raise TypeError('Value must be a float or a numpy array')
 
-def insert_array(dest, src, at):
+def mix_buffer(dest, src, at):
     '''
     Mix an array into another at a certain point
     dest - the main buffer
@@ -97,14 +86,14 @@ def insert_array(dest, src, at):
     '''
     destlen = dest.size
     srclen = src.size
-    if at < 0:                   #Before start
-        return
-    if at > destlen:             #After end
-        return
+    if at < 0:          #Before start
+        raise IndexError("Source buffer position less than 0")
+    if at + src.size > destlen:             #After end
+        raise IndexError("Source buffer extends beyond destination buffer")
     length = srclen
     if at + srclen > destlen:
         length -= at + srclen - destlen
     if length <= 0:
         return
-    dest[at:at+length] = np.add(dest[at:at+length], src[:length])
+    dest[at:at+srclen] = np.add(dest[at:at+srclen], src[:])
             

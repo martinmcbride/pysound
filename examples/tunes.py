@@ -4,7 +4,7 @@ from pysound import oscillators
 from pysound import sequencers
 from pysound.const import Notes as N
 
-params = buffer.BufferParams().set_time(1)
+params = buffer.BufferParams()
 data1 = oscillators.sine_wave(params, frequency=N.C4)
 data2 = oscillators.sine_wave(params, frequency=N.D4)
 data3 = oscillators.sine_wave(params, frequency=N.E4)

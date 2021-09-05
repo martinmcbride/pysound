@@ -12,7 +12,7 @@ def three_osc_instr(params, frequency, detune1, detune2):
     return (tone1 + tone2 + tone3) / 3
 
 
-params = buffer.BufferParams().set_time(4).set_tempo(120)
+params = buffer.BufferParams().with_duration(4)
 detune1 = envelopes.linseg(params, 0.001, 0.007)
 detune2 = envelopes.linseg(params, 0.005, 0.002)
 data = three_osc_instr(params, frequency=400, detune1=detune1, detune2=detune2)

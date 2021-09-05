@@ -10,8 +10,8 @@ def simple_instr(params, frequency):
     tone = oscillators.saw_wave(params, frequency=frequency, amplitude=env)
     return tone
 
-params = buffer.BufferParams().set_time(4).set_tempo(120)
-beatp = buffer.BufferParams(params).set_length(params.b2s(1))
+params = buffer.BufferParams().with_duration(7)
+beatp = buffer.BufferParams(params).with_duration(1)
 beat = beatp.length;
 data = mixers.sequencer(params,
                         [(simple_instr(beatp, const.Notes.C4), 0),

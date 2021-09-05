@@ -11,7 +11,7 @@ def simple_instr(params, frequency):
     return data
 
 
-params = buffer.BufferParams().set_time(1)
+params = buffer.BufferParams()
 notes = [N.C4, N.D4, N.E4, N.F4, N.G4, N.A4, N.B4, N.C5]
 buffers = [simple_instr(params, frequency=f) for f in notes]
 data = sequencers.join(buffers)
