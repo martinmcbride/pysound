@@ -30,14 +30,14 @@ def sequencer(params, source_specs):
     '''
     Add a sequence of sounds to a buffer
     :param params: buffer parameters, controls length of signal created
-    :param source_spec: list of tuples containing (source, sample). The source is added into the output buffer
+    :param source_spec: list of tuples containing (source, position). The source is added into the output buffer
     at the sample position given by the second element in the tuple
     :return:
     '''
-    output = np.zeros(params.length, dtype=np.float)
+    output = np.zeros(params.get_length(), dtype=np.float)
     for source, pos in source_specs:
         if pos >= 0:
-            length = min(source.size, params.length - pos)
+            length = min(source.size, params.get_length() - pos)
             if length > 0:
                 output[pos:pos+length] += source[:length]
     return output

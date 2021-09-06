@@ -15,7 +15,7 @@ def save(params, filename, source):
     # Set the WAV file parameters, currently default values
     writer.setnchannels(1)
     writer.setsampwidth(2)
-    writer.setframerate(params.sample_rate)
+    writer.setframerate(params.get_sample_rate())
     data_out = array.array('h')
     for x in source:
         data_out.append(int(x * 32766))

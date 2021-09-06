@@ -13,7 +13,7 @@ def linseg(params, start=0, end=1):
     :param end: end value (number)
     :return: array of resulting signal
     '''
-    return np.linspace(start, end, num=params.length, endpoint=True)
+    return np.linspace(start, end, num=params.get_length(), endpoint=True)
 
 
 class GenericEnvelope:
@@ -23,7 +23,7 @@ class GenericEnvelope:
 
     def __init__(self, params):
         self.params = params
-        self.data = np.zeros(params.length, dtype=np.float)
+        self.data = np.zeros(params.get_length(), dtype=np.float)
         self.latest = 0
         self.pos = 0
 
@@ -34,8 +34,8 @@ class GenericEnvelope:
         :param samples: Add current value for this number of samples (if not zero)
         :return:
         '''
-        if self.params.length > self.pos and samples > 0:
-            l = min(samples, self.params.length-self.pos)
+        if self.params.get_length() > self.pos and samples > 0:
+            l = min(samples, self.params.get_length()-self.pos)
             self.data[self.pos:self.pos+l] = np.full(l, value, dtype=np.float)
             self.pos += l
         self.latest = value
@@ -47,8 +47,8 @@ class GenericEnvelope:
         :param samples: Add previous value for this number of samples
         :return:
         '''
-        if self.params.length > self.pos and samples > 0:
-            l = min(samples, self.params.length-self.pos)
+        if self.params.get_length() > self.pos and samples > 0:
+            l = min(samples, self.params.get_length()-self.pos)
             self.data[self.pos:self.pos+l] = np.full(l, self.latest, dtype=np.float)
             self.pos += l
         return self
@@ -61,8 +61,8 @@ class GenericEnvelope:
         :param samples: Length of segment in samples
         :return:
         '''
-        if self.params.length > self.pos and samples > 0:
-            len = min(samples, self.params.length - self.pos)
+        if self.params.get_length() > self.pos and samples > 0:
+            len = min(samples, self.params.get_length() - self.pos)
             end = value if len == samples else self.latest + (value - self.latest)*len/samples
             self.data[self.pos:self.pos + len] = np.linspace(self.latest, end, num=len, endpoint=False, dtype=np.float)
             self.pos += len
@@ -70,7 +70,7 @@ class GenericEnvelope:
         return self
 
     def build(self):
-        if self.params.length > self.pos:
+        if self.params.get_length() > self.pos:
             l = self.params.length-self.pos
             self.data[self.pos:self.pos+l] = np.full(l, self.latest, dtype=np.float)
         return self.data
@@ -90,6 +90,6 @@ def attack_decay(params, attack, start=0, peak=1):
     builder.set(start)
     builder.linseg(peak, attack)
     if attack < params.length:
-        builder.linseg(start, params.length - attack)
+        builder.linseg(start, params.get_length() - attack)
     return builder.build()
 

@@ -83,7 +83,7 @@ def table_wave(params, frequency=400, amplitude=1,
     frequency = create_buffer(params, frequency)
     amplitude = create_buffer(params, amplitude)
     offset = create_buffer(params, offset)
-    index = np.floor((np.add.accumulate(frequency / params.sample_rate) % 1) * size).astype(int)
+    index = np.floor((np.add.accumulate(frequency / params.get_sample_rate()) % 1) * size).astype(int)
     output = offset + amplitude * table[index]
     return output
 
@@ -114,7 +114,7 @@ def sync_table_wave(params, sync, frequency=400, amplitude=1,
             index = 0
         print(index)
         output[i] = table[index]
-        index = index + (frequency[i] / params.sample_rate) * size
+        index = index + (frequency[i] / params.get_sample_rate()) * size
         print(index)
         index = int(index % size)
     return output*amplitude

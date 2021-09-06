@@ -21,7 +21,7 @@ def echo(params, source, delay, strength):
     delay = create_buffer(params, delay)
     strength = create_buffer(params, strength)
     output = source[:]
-    for i in range(params.length):
+    for i in range(params.get_length()):
         d = int(i - delay[i])
         if 0 <= d < params.length:
             output[i] += source[d]*strength[i]

@@ -16,26 +16,26 @@ class BasicSequence:
         self.params = params
         self.instrument = instrument
         self.step = step
-        self.buffer = buffer.create_buffer(params, 0)
+        self.buffer = buffer.create_buffer(params)
         self.pos = 0
 
     def insert_next(self, frequency, duration=1, **extras):
         print(self.pos)
-        params = buffer.BufferParams(self.params).set_length(self.step*duration)
+        params = self.params.of_duration(self.step*duration)
         buf = self.instrument(params, frequency=frequency, **extras)
         buffer.insert_array(self.buffer, buf, self.pos)
         self.pos += params.length
         return self
 
     def insert_at(self, pos, frequency, duration=1, **extras):
-        params = buffer.BufferParams(self.params).set_length(self.step*duration)
+        params = self.params.of_duration(self.step*duration)
         buf = self.instrument(params, frequency=frequency, **extras)
         buffer.insert_array(self.buffer, buf, pos)
         self.pos = pos + params.length
         return self
 
     def insert_blank(self, duration=1):
-        self.pos += self.params.b2s(self.step*duration)
+        self.pos += self.params.t2s(self.step*duration)
         return self
 
     def get_buffer(self):
