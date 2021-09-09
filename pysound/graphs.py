@@ -29,7 +29,7 @@ class Plotter:
     def plot(self):
         rcParams['figure.figsize'] = self.image_width, self.image_height
         time = np.linspace(0, self.params.get_length()/self.params.get_sample_rate(), num=self.params.get_length());
-        plot.plot(time, self.waves)
+        plot.plot(time, self.waves[0])
         if self.title:
             plot.title(self.title)
         plot.xlabel('Time')
