@@ -4,6 +4,7 @@
 # License: MIT
 
 import numpy as np
+import math
 
 def linseg(params, start=0, end=1):
     '''
@@ -55,7 +56,7 @@ class GenericEnvelope:
 
     def linseg(self, value, samples):
         '''
-        Create a linear section moving from current value to new value over acertain number of
+        Create a linear section moving from current value to new value over a certain number of
         samples.
         :param value: New value
         :param samples: Length of segment in samples
@@ -69,14 +70,39 @@ class GenericEnvelope:
         self.latest = value
         return self
 
+    def expseg(self, value, samples, factor=5):
+        '''
+        Create an exponential section moving from current value to new value over a certain number of
+        samples.
+        :param value: New value
+        :param samples: Length of segment in samples
+        :param factor: exponential factor
+        :return:
+        '''
+        sample_rate = self.params.get_sample_rate()
+        factor = -factor
+        if self.params.get_length() > self.pos and samples > 0:
+            len = min(samples, self.params.get_length() - self.pos)
+            x0 = 0
+            x1 = len
+            y0 = self.latest
+            y1 = value
+            print(x0, x1, y0, y1, factor)
+            b = (y1 - y0) / (math.exp(factor*(x1/sample_rate - x0)))
+            xvals = np.linspace(0, len, num=len, endpoint=False, dtype=np.float)/x1
+            self.data[self.pos:self.pos + len] = y0 + (y1-y0)*(1-np.exp(factor*xvals))/(1-math.exp(factor))
+            self.pos += len
+        self.latest = value
+        return self
+
     def build(self):
         if self.params.get_length() > self.pos:
-            l = self.params.length-self.pos
+            l = self.params.get_length()-self.pos
             self.data[self.pos:self.pos+l] = np.full(l, self.latest, dtype=np.float)
         return self.data
 
 
-def attack_decay(params, attack, start=0, peak=1):
+def attack_decay(params, attack, start=0, peak=1, factor=5):
     '''
     Signal starts at min value, ramps linearly up to max value during the
     attack time, than ramps back down to min value over remaining time
@@ -84,12 +110,13 @@ def attack_decay(params, attack, start=0, peak=1):
     :param attack: attack time, in samples
     :param start: start value (number)
     :param peak: peak value (number)
+    :param factor: exponential factor
     :return:
     '''
     builder = GenericEnvelope(params)
     builder.set(start)
-    builder.linseg(peak, attack)
-    if attack < params.length:
-        builder.linseg(start, params.get_length() - attack)
+    builder.expseg(peak, attack, factor)
+    if attack < params.get_length():
+        builder.expseg(start, params.get_length() - attack, factor)
     return builder.build()
 
