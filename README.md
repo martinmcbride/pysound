@@ -15,5 +15,6 @@ Features:
 * Graph - plot sound waves
 
 [Tutorial](http://www.martinmcbride.org/pysound_tutorial)
+
 [Reference](http://www.martinmcbride.org/pysound-reference)
 
