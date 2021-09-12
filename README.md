@@ -12,5 +12,8 @@ Features:
 * Mixers - add, multiply
 * Sequencers - join sounds, basic sound sequencer
 * Output - WAV file
+* Graph - plot sound waves
 
-[Main website](http://www.martinmcbride.org/pysound_tutorial)
+[Tutorial](http://www.martinmcbride.org/pysound_tutorial)
+[Reference](http://www.martinmcbride.org/pysound-reference)
+
