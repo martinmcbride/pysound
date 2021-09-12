@@ -16,6 +16,8 @@ class Plotter:
         self.title = ''
         self.image_width = 10
         self.image_height = 4
+        self.xrange = None
+        self.yrange = None
 
     def with_title(self, title):
         self.title = title
@@ -26,10 +28,35 @@ class Plotter:
         self.image_height = image_height
         return self
 
+    def with_xrange(self, x0, x1):
+        self.xrange = (x0, x1)
+        return self
+
+    def with_timerange(self, t0, t1):
+        x0 = self.params.t2s(t0)
+        x1 = self.params.t2s(t1)
+        self.xrange = (x0, x1)
+        return self
+
+    def with_yrange(self, y0, y1):
+        self.yrange = (y0, y1)
+        return self
+
     def plot(self):
         rcParams['figure.figsize'] = self.image_width, self.image_height
-        time = np.linspace(0, self.params.get_length()/self.params.get_sample_rate(), num=self.params.get_length());
-        plot.plot(time, self.waves[0])
+        plot.figure()
+
+        time = np.linspace(0, self.params.get_length()/self.params.get_sample_rate(), num=self.params.get_length())
+
+        if self.xrange:
+            plot.xlim(self.xrange[0]/self.params.get_sample_rate(), self.xrange[1]/self.params.get_sample_rate())
+
+        if self.yrange:
+            plot.ylim(*self.yrange)
+
+        for wave in self.waves:
+            plot.plot(time, wave)
+
         if self.title:
             plot.title(self.title)
         plot.xlabel('Time')

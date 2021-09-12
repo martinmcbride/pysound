@@ -112,10 +112,8 @@ def sync_table_wave(params, sync, frequency=400, amplitude=1,
     for i in range(1, params.length):
         if sync[i-1]>=0 and sync[i]<0:
             index = 0
-        print(index)
         output[i] = table[index]
         index = index + (frequency[i] / params.get_sample_rate()) * size
-        print(index)
         index = int(index % size)
     return output*amplitude
 

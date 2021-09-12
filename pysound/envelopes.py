@@ -87,8 +87,6 @@ class GenericEnvelope:
             x1 = len
             y0 = self.latest
             y1 = value
-            print(x0, x1, y0, y1, factor)
-            b = (y1 - y0) / (math.exp(factor*(x1/sample_rate - x0)))
             xvals = np.linspace(0, len, num=len, endpoint=False, dtype=np.float)/x1
             self.data[self.pos:self.pos + len] = y0 + (y1-y0)*(1-np.exp(factor*xvals))/(1-math.exp(factor))
             self.pos += len

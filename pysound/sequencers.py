@@ -20,7 +20,6 @@ class BasicSequence:
         self.pos = 0
 
     def insert_next(self, frequency, duration=1, **extras):
-        print(self.pos)
         params = self.params.of_duration(self.step*duration)
         buf = self.instrument(params, frequency=frequency, **extras)
         buffer.insert_array(self.buffer, buf, self.pos)
