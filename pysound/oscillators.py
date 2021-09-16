@@ -21,7 +21,7 @@ def square_wave(params, frequency=400, amplitude=1,
     :param frequency: wave frequency (array or value)
     :param amplitude: wave amplitude (array or value)
     :param offset: offset of wave mean from zero (array or value)
-    :param ratio: ratio of high to low time (array or value)
+    :param ratio: proportion of high to total time (array or value)
     :return: array of resulting signal
     '''
     frequency = create_buffer(params, frequency)
@@ -41,7 +41,7 @@ def saw_wave(params, frequency=400, amplitude=1,
     :param frequency: wave frequency (array or value)
     :param amplitude: wave amplitude (array or value)
     :param offset: offset of wave mean from zero (array or value)
-    :param ratio: ratio of rise to fall time (array or value)
+    :param ratio: proportion of rise time to total time (array or value)
     :return: array of resulting signal
     '''
     frequency = create_buffer(params, frequency)
