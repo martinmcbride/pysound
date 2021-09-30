@@ -18,6 +18,7 @@ class Plotter:
         self.image_height = 4
         self.xrange = None
         self.yrange = None
+        self.enable_milliseconds = False
 
     def with_title(self, title):
         self.title = title
@@ -42,14 +43,21 @@ class Plotter:
         self.yrange = (y0, y1)
         return self
 
+    def in_milliseconds(self, enable_milliseconds=True):
+        self.enable_milliseconds = enable_milliseconds;
+        return self
+
     def plot(self):
         rcParams['figure.figsize'] = self.image_width, self.image_height
         plot.figure()
 
-        time = np.linspace(0, self.params.get_length()/self.params.get_sample_rate(), num=self.params.get_length())
+        time_scale = 1000 if self.enable_milliseconds else 1
+        time = np.linspace(0, self.params.get_length()*time_scale/self.params.get_sample_rate(),
+                           num=self.params.get_length())
 
         if self.xrange:
-            plot.xlim(self.xrange[0]/self.params.get_sample_rate(), self.xrange[1]/self.params.get_sample_rate())
+            plot.xlim(self.xrange[0]*time_scale/self.params.get_sample_rate(),
+                      self.xrange[1]*time_scale/self.params.get_sample_rate())
 
         if self.yrange:
             plot.ylim(*self.yrange)
@@ -59,7 +67,8 @@ class Plotter:
 
         if self.title:
             plot.title(self.title)
-        plot.xlabel('Time')
+        time_units = '(ms)' if self.enable_milliseconds else '(s)'
+        plot.xlabel('Time ' + time_units)
         plot.ylabel('Amplitude')
         plot.grid(True, which='both')
         plot.axhline(y=0, color='k')
