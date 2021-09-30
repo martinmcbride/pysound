@@ -28,7 +28,7 @@ def square_wave(params, frequency=400, amplitude=1,
     amplitude = create_buffer(params, amplitude)
     offset = create_buffer(params, offset)
     ratio = create_buffer(params, ratio)
-    phase = np.add.accumulate(frequency / params.sample_rate) % 1
+    phase = np.add.accumulate(frequency / params.get_sample_rate()) % 1
     output = offset + amplitude * np.where(phase < ratio, 1, -1)
     return output
 
@@ -48,7 +48,7 @@ def saw_wave(params, frequency=400, amplitude=1,
     amplitude = create_buffer(params, amplitude)
     offset = create_buffer(params, offset)
     ratio = np.clip(create_buffer(params, ratio), 0.000001, 0.999999)
-    phase = np.add.accumulate(frequency / params.sample_rate) % 1
+    phase = np.add.accumulate(frequency / params.get_sample_rate()) % 1
     output = offset + amplitude * np.where(phase < ratio, -1 + 2*phase/ratio, 1 - 2*(phase-ratio)/(1-ratio))
     return output
 
