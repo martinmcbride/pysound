@@ -49,7 +49,7 @@ soundfile.save(params, '/tmp/sine-500-3-4.wav', out)
 
 ## Plot a graph of the first part of the previous sine wave
 Plotter(params, 'sine-500-3-4.png', out).with_timerange(0, 0.01)\
-                                    .with_title("500 Hz sine wave, amplitude 0.4, offset 0.4")\
+                                    .with_title("500 Hz sine wave, amplitude 0.3, offset 0.4")\
                                     .with_yrange(-1, 1)\
                                     .in_milliseconds()\
                                     .plot()
