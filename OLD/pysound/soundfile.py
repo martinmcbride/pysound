@@ -4,7 +4,7 @@
 # License: MIT
 
 from scipy.io.wavfile import read, write
-from pysound.buffer import BufferParams
+from OLD.pysound.buffer import BufferParams
 
 def save(params, filename, source):
     '''

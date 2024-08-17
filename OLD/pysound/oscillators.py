@@ -5,7 +5,7 @@
 
 import math
 import numpy as np
-from pysound.buffer import create_buffer
+from OLD.pysound.buffer import create_buffer
 
 
 def create_sine_table(size):

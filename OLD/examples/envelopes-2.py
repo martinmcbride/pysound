@@ -1,9 +1,6 @@
-from pysound import buffer
-from pysound import soundfile
-from pysound import oscillators
-from pysound import envelopes
-from pysound import sequencers
-from pysound.const import Notes as N
+from OLD.pysound import soundfile, buffer, oscillators, sequencers
+from OLD.pysound import envelopes
+from OLD.pysound.const import Notes as N
 
 def simple_instr(params, frequency):
     env = envelopes.attack_decay(params, attack=params.t2s(0.01))

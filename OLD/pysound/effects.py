@@ -3,9 +3,7 @@
 # Copyright (C) 2018, Martin McBride
 # License: MIT
 
-import math
-import numpy as np
-from pysound.buffer import create_buffer
+from OLD.pysound.buffer import create_buffer
 
 
 def echo(params, source, delay, strength):

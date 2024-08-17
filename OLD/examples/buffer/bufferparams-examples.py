@@ -3,7 +3,7 @@
 # Copyright (C) 2021, Martin McBride
 # License: MIT
 
-from pysound.buffer import BufferParams
+from OLD.pysound.buffer import BufferParams
 
 # BufferParams is immutable
 

@@ -1,6 +1,4 @@
-from pysound import buffer
-from pysound import soundfile
-from pysound import oscillators
+from OLD.pysound import soundfile, buffer, oscillators
 
 params = buffer.BufferParams()
 data = oscillators.sine_wave(params)

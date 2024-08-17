@@ -3,11 +3,11 @@
 # Copyright (C) 2021, Martin McBride
 # License: MIT
 
-from pysound.buffer import BufferParams
-from pysound.oscillators import sine_wave
-from pysound import soundfile
-from pysound.const import Notes
-from pysound.graphs import Plotter
+from OLD.pysound.buffer import BufferParams
+from OLD.pysound.oscillators import sine_wave
+from OLD.pysound import soundfile
+from OLD.pysound.const import Notes
+from OLD.pysound.graphs import Plotter
 
 params = BufferParams()
 

@@ -3,7 +3,7 @@
 # Copyright (C) 2018, Martin McBride
 # License: MIT
 
-from pysound import buffer
+from OLD.pysound import buffer
 import numpy as np
 
 

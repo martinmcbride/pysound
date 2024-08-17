@@ -3,10 +3,10 @@
 # Copyright (C) 2021, Martin McBride
 # License: MIT
 
-from pysound.buffer import BufferParams
-from pysound.oscillators import saw_wave
-from pysound import soundfile
-from pysound.graphs import Plotter
+from OLD.pysound.buffer import BufferParams
+from OLD.pysound.oscillators import saw_wave
+from OLD.pysound import soundfile
+from OLD.pysound.graphs import Plotter
 
 ## Create a triangle wave at 500 Hz
 params = BufferParams()

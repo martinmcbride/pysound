@@ -1,14 +1,11 @@
-from pysound import buffer
-from pysound import soundfile
-from pysound import oscillators
-from pysound import envelopes
-from pysound import mixers
-from pysound import const
+from OLD.pysound import soundfile, buffer, oscillators
+from OLD.pysound import envelopes
+
 
 def three_osc_instr(params, frequency, detune1, detune2):
     tone1 = oscillators.saw_wave(params, frequency=frequency)
-    tone2 = oscillators.saw_wave(params, frequency=frequency*(1-detune1))
-    tone3 = oscillators.saw_wave(params, frequency=frequency*(1+detune2))
+    tone2 = oscillators.saw_wave(params, frequency=frequency * (1 - detune1))
+    tone3 = oscillators.saw_wave(params, frequency=frequency * (1 + detune2))
     return (tone1 + tone2 + tone3) / 3
 
 

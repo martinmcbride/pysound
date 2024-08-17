@@ -1,7 +1,7 @@
 import unittest
 import numpy as np
-from pysound.buffer import BufferParams
-from pysound.mixers import modulator, adder, sequencer
+from OLD.pysound import BufferParams
+from OLD.pysound import modulator, adder, sequencer
 
 
 class TestBuffer(unittest.TestCase):

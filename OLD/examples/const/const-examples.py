@@ -3,7 +3,7 @@
 # Copyright (C) 2021, Martin McBride
 # License: MIT
 
-from pysound.const import Notes
+from OLD.pysound.const import Notes
 
 # Print some note frequencies
 print("C4", Notes.C4)   # Middle C

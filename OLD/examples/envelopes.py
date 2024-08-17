@@ -1,8 +1,6 @@
-from pysound import buffer
-from pysound import soundfile
-from pysound import oscillators
-from pysound import envelopes
-from pysound.const import Notes as N
+from OLD.pysound import soundfile, buffer, oscillators
+from OLD.pysound import envelopes
+from OLD.pysound.const import Notes as N
 
 
 params = buffer.BufferParams()

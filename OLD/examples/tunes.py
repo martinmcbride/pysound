@@ -1,8 +1,5 @@
-from pysound import buffer
-from pysound import soundfile
-from pysound import oscillators
-from pysound import sequencers
-from pysound.const import Notes as N
+from OLD.pysound import soundfile, buffer, oscillators, sequencers
+from OLD.pysound.const import Notes as N
 
 params = buffer.BufferParams()
 data1 = oscillators.sine_wave(params, frequency=N.C4)

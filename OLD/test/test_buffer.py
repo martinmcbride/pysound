@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-from pysound.buffer import BufferParams, create_buffer, mix_buffer
+from OLD.pysound import BufferParams, create_buffer, mix_buffer
 
 
 class TestBuffer(unittest.TestCase):
