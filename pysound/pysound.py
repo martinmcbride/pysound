@@ -13,8 +13,10 @@ class Connection:
 
     def __init__(self, unit):
         self.unit = unit
+        self.previous_data = []
 
     def get(self, length=DATA_LENGTH):
+        if len(self.previous_data) >= length)
         data = self.unit.get()
         return data
 
