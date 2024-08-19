@@ -16,12 +16,15 @@ class Connection:
         self.data = []
 
     def get(self, length=DATA_LENGTH):
-        while len(self.data) < length:
-            extra = self.unit.get()
-            self.data = np.concatenate((self.data, extra))
-        value = self.data[:length]
-        self.data = self.data[length:]
-        return value
+        if isinstance(self.unit, (int, float)):
+            return np.full(length, self.unit)
+        else:
+            while len(self.data) < length:
+                extra = self.unit.get()
+                self.data = np.concatenate((self.data, extra))
+            value = self.data[:length]
+            self.data = self.data[length:]
+            return value
 
 
 class Unit:
