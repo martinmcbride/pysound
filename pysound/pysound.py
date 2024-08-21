@@ -3,10 +3,19 @@
 # Copyright (C) 2024, Martin McBride
 # License: MIT
 
+from dataclasses import dataclass
+
 import numpy as np
 
 DATA_LENGTH = 256
 DATA_TYPE = np.double
+TABLE_SIZE = 65536
+
+@dataclass
+class Params():
+    sample_rate: int = 44100
+
+PARAMS = Params()
 
 
 class Connection:
