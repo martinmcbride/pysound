@@ -1,7 +1,5 @@
 import unittest
 
-import numpy
-import numpy as np
 from pysound.pysound import DummyUnit, Connection
 
 

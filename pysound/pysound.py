@@ -4,10 +4,11 @@
 # License: MIT
 
 from dataclasses import dataclass
+from typing import Type, Union
 
 import numpy as np
 
-DATA_LENGTH = 256
+DATA_LENGTH = 16
 DATA_TYPE = np.double
 TABLE_SIZE = 65536
 
@@ -18,11 +19,21 @@ class Params():
 PARAMS = Params()
 
 
+class RawUnit:
+
+    def __init__(self):
+        pass
+
+    def get(self):
+        pass
+
+Unit = RawUnit | int | float
+
 class Connection:
 
-    def __init__(self, unit):
+    def __init__(self, unit: Unit):
         self.unit = unit
-        self.data = []
+        self.data = np.zeros(0, DATA_TYPE)
 
     def get(self, length=DATA_LENGTH):
         if isinstance(self.unit, (int, float)):
@@ -36,23 +47,15 @@ class Connection:
             return value
 
 
-class Unit:
 
-    def __init__(self):
-        pass
-
-    def get(self):
-        pass
-    
-
-class DummyUnit(Unit):
+class DummyUnit(RawUnit):
     """
     Unit that return fixed length buffers constaining [0.0, 1.0, 2.0...]
 
     Length is set in constructor. Mainly intended for testing purposes
     """
 
-    def __init__(self, length):
+    def __init__(self, length: int):
         super().__init__()
         self.length = length
 
