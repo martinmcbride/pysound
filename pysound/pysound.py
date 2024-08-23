@@ -8,7 +8,7 @@ from typing import Type, Union
 
 import numpy as np
 
-DATA_LENGTH = 16
+DATA_LENGTH = 1024
 DATA_TYPE = np.double
 TABLE_SIZE = 65536
 
