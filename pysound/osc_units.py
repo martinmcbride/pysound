@@ -59,8 +59,34 @@ class SquareUnit(RawUnit):
         p = self.initial_phase.get(self.data_length)
         phase_accumulator = np.add.accumulate(f / PARAMS.sample_rate) % 1
         phase = (p + self.previous_phase + phase_accumulator) % 1
-        print(phase, r)
         out = o + a * np.where(phase < r, 1, -1)
+        self.previous_phase += phase_accumulator[-1]
+
+        return out
+
+
+class SawUnit(RawUnit):
+
+    def __init__(self, frequency: Unit=400, amplitude: Unit=1, offset: Unit=0, ratio: Unit=0.5, initial_phase: float=0):
+        super().__init__()
+        self.data_length = DATA_LENGTH
+        self.frequency = Connection(frequency)
+        self.amplitude = Connection(amplitude)
+        self.offset = Connection(offset)
+        self.ratio = Connection(ratio)
+        self.initial_phase = Connection(initial_phase)
+        self.previous_phase = 0
+
+
+    def get(self):
+        f = self.frequency.get(self.data_length)
+        a = self.amplitude.get(self.data_length)
+        o = self.offset.get(self.data_length)
+        r = self.ratio.get(self.data_length)
+        p = self.initial_phase.get(self.data_length)
+        phase_accumulator = np.add.accumulate(f / PARAMS.sample_rate) % 1
+        phase = (p + self.previous_phase + phase_accumulator) % 1
+        out = o + a * np.where(phase < r, -1 + 2 * phase / r, 1 - 2 * (phase - r) / (1 - r))
         self.previous_phase += phase_accumulator[-1]
 
         return out
