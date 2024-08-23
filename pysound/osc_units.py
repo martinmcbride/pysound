@@ -90,3 +90,20 @@ class SawUnit(RawUnit):
         self.previous_phase += phase_accumulator[-1]
 
         return out
+
+
+class NoiseUnit(RawUnit):
+
+    def __init__(self, amplitude: Unit=1, offset: Unit=0):
+        super().__init__()
+        self.data_length = DATA_LENGTH
+        self.amplitude = Connection(amplitude)
+        self.offset = Connection(offset)
+
+
+    def get(self):
+        a = self.amplitude.get(self.data_length)
+        o = self.offset.get(self.data_length)
+        out = o + a * (np.random.random(DATA_LENGTH) * 2 - 1)
+
+        return out
