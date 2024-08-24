@@ -1,6 +1,6 @@
 import unittest
 
-from pysound.pysound import DummyUnit, Connection
+from pysound.pysound_defs import DummyUnit, Connection
 
 
 class TestDummyUnit(unittest.TestCase):

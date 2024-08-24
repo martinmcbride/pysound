@@ -7,7 +7,7 @@ from numbers import Number
 
 import numpy as np
 
-from pysound.pysound import Unit, DATA_LENGTH, Connection, TABLE_SIZE, DATA_TYPE, PARAMS, RawUnit
+from pysound_defs import Unit, DATA_LENGTH, Connection, TABLE_SIZE, DATA_TYPE, PARAMS, RawUnit
 
 
 class SineUnit(RawUnit):
