@@ -50,7 +50,7 @@ class Connection:
 
 class DummyUnit(RawUnit):
     """
-    Unit that return fixed length buffers constaining [0.0, 1.0, 2.0...]
+    Unit that return fixed length buffers containing [0.0, 1.0, 2.0...]
 
     Length is set in constructor. Mainly intended for testing purposes
     """
