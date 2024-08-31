@@ -1,15 +1,15 @@
 # Generate expected results file, and a plot, for any unit
 
 from pysound.graph import Plotter
-from pysound.osc_units import SineUnit, SquareUnit
+from pysound.osc_units import SineUnit, SquareUnit, SawUnit
 from pysound.pysound_defs import PARAMS
 from pysound.soundfile import writetextfile
 
 
 def get_unit():
-    return SquareUnit(500, 0.3, 0.2, 0.7, 0.5)
+    return SawUnit()
 
-DATA_FILE = "TestSquareUnit_test_non_defaults.txt"
+DATA_FILE = "TestSawUnit_test_defaults.txt"
 
 DATA_LENGTH = 441
 
