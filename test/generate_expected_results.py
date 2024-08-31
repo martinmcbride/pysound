@@ -3,7 +3,7 @@
 from pysound.graph import Plotter
 from pysound.osc_units import SineUnit, SquareUnit, SawUnit
 from pysound.pysound_defs import PARAMS
-from pysound.soundfile import write_text_file
+from pysound.sound_file import write_text_file
 
 
 def get_unit():

@@ -2,7 +2,7 @@ import unittest
 
 from pysound.osc_units import SineUnit, SquareUnit, SawUnit
 from pysound.pysound_defs import Connection
-from pysound.soundfile import read_text_file
+from pysound.sound_file import read_text_file
 from test.utils import compare_buffers
 
 
