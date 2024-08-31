@@ -10,7 +10,7 @@ import numpy as np
 from pysound.pysound_defs import PARAMS, Connection, Unit, DATA_TYPE
 
 
-def writewavfile(filename: str, source: Unit, samples: int):
+def write_wav_file(filename: str, source: Unit, samples: int):
     '''
     Write a sequence of samples as a WAV file
     Currently a 16 bit mono file
@@ -26,7 +26,7 @@ def writewavfile(filename: str, source: Unit, samples: int):
             data_out.append(int(x * 32766))
         writer.writeframes(data_out)
 
-def writetextfile(filename: str, source: Unit, samples: int):
+def write_text_file(filename: str, source: Unit, samples: int):
     '''
     Write a sequence of samples as a text file
     '''
@@ -36,7 +36,7 @@ def writetextfile(filename: str, source: Unit, samples: int):
         for x in data:
             writer.write(f"{x:.8f}\n")
 
-def readtextfile(filename: str):
+def read_text_file(filename: str):
     '''
     Read a sequence of samples from a text file, stored one per line in format:
 

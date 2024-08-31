@@ -5,10 +5,11 @@
 
 import numpy as np
 
-from pysound_defs import Unit, DATA_LENGTH, Connection, TABLE_SIZE, DATA_TYPE, PARAMS, RawUnit
+from pysound_defs import Unit, DATA_LENGTH, Connection, TABLE_SIZE, DATA_TYPE, PARAMS, BaseUnit
 
 
-class GenericEnvelopeUnit(RawUnit):
+
+class GenericEnvelopeUnit(BaseUnit):
 
     def __init__(self, sections: list, amplitude: Unit=1):
         super().__init__()

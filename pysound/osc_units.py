@@ -7,10 +7,10 @@ from numbers import Number
 
 import numpy as np
 
-from pysound.pysound_defs import Unit, DATA_LENGTH, Connection, TABLE_SIZE, DATA_TYPE, PARAMS, RawUnit
+from pysound.pysound_defs import Unit, DATA_LENGTH, Connection, TABLE_SIZE, DATA_TYPE, PARAMS, BaseUnit
 
 
-class SineUnit(RawUnit):
+class SineUnit(BaseUnit):
 
     def __init__(self, frequency: Unit=400, amplitude: Unit=1, offset: Unit=0, initial_phase: float=0):
         super().__init__()
@@ -38,7 +38,7 @@ class SineUnit(RawUnit):
         return out
 
 
-class SquareUnit(RawUnit):
+class SquareUnit(BaseUnit):
 
     def __init__(self, frequency: Unit=400, amplitude: Unit=1, offset: Unit=0, ratio: Unit=0.5, initial_phase: float=0):
         super().__init__()
@@ -65,7 +65,7 @@ class SquareUnit(RawUnit):
         return out
 
 
-class SawUnit(RawUnit):
+class SawUnit(BaseUnit):
 
     def __init__(self, frequency: Unit=400, amplitude: Unit=1, offset: Unit=0, ratio: Unit=0.5, initial_phase: float=0):
         super().__init__()
@@ -92,7 +92,7 @@ class SawUnit(RawUnit):
         return out
 
 
-class NoiseUnit(RawUnit):
+class NoiseUnit(BaseUnit):
 
     def __init__(self, amplitude: Unit=1, offset: Unit=0):
         super().__init__()

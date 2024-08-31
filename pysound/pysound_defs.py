@@ -19,7 +19,7 @@ class Params():
 PARAMS = Params()
 
 
-class RawUnit:
+class BaseUnit:
 
     def __init__(self):
         pass
@@ -27,7 +27,7 @@ class RawUnit:
     def get(self):
         pass
 
-Unit = RawUnit | int | float
+Unit = BaseUnit | int | float
 
 class Connection:
 
@@ -48,7 +48,7 @@ class Connection:
 
 
 
-class DummyUnit(RawUnit):
+class DummyUnit(BaseUnit):
     """
     Unit that return fixed length buffers containing [0.0, 1.0, 2.0...]
 
