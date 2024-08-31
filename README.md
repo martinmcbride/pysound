@@ -1,5 +1,7 @@
 # PySound
 
+NOTE - currently undergoing a fairly major re-write to improve overall design. Existing references and tutorials are out of date.
+
 A Python library for creating digital sound and music.
 
 PySound uses numpy arrays to store and process sound.
@@ -13,8 +15,4 @@ Features:
 * Sequencers - join sounds, basic sound sequencer
 * Output - WAV file
 * Graph - plot sound waves
-
-[Tutorial](http://www.martinmcbride.org/pysound_tutorial)
-
-[Reference](http://www.martinmcbride.org/pysound-reference)
 
