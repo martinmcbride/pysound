@@ -7,9 +7,9 @@ from pysound.soundfile import writetextfile
 
 
 def get_unit():
-    return SquareUnit()
+    return SquareUnit(500, 0.3, 0.2, 0.7, 0.5)
 
-DATA_FILE = "TestSquareUnit_test_defaults.txt"
+DATA_FILE = "TestSquareUnit_test_non_defaults.txt"
 
 DATA_LENGTH = 441
 
