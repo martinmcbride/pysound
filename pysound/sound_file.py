@@ -18,12 +18,13 @@ def write_wav_file(filename: str, source: Unit, samples: int):
     conn = Connection(source)
     with wave.open(filename, 'wb') as writer:
         # Set the WAV file parameters, currently default values
-        writer.setnchannels(1)
+        writer.setnchannels(PARAMS.channels)
         writer.setsampwidth(2)
         writer.setframerate(PARAMS.sample_rate)
         data_out = array.array('h')
         for x in conn.get(samples):
-            data_out.append(int(x * 32766))
+            data_out.append(int(x[0] * 32766))
+            data_out.append(int(x[1] * 32766))
         writer.writeframes(data_out)
 
 def write_text_file(filename: str, source: Unit, samples: int):
@@ -34,7 +35,9 @@ def write_text_file(filename: str, source: Unit, samples: int):
     data = conn.get(samples)
     with open(filename, 'w') as writer:
         for x in data:
-            writer.write(f"{x:.8f}\n")
+            for i in range(PARAMS.channels):
+                writer.write(f"{x[i]:.8f} ")
+            writer.write(f"\n")
 
 def read_text_file(filename: str):
     '''

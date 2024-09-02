@@ -4,15 +4,16 @@ from pysound.graph import Plotter
 from pysound.mix_units import SequencerUnit, SeqItem
 from pysound.osc_units import SineUnit, SquareUnit, SawUnit
 from pysound.pysound_defs import PARAMS
-from pysound.sound_file import write_text_file
+from pysound.sound_file import write_text_file, write_wav_file
 
+PARAMS.channels = 2
 
 def get_unit():
-    return SequencerUnit([SeqItem(100, 50, 0.5)], 441)
+    return SineUnit((400, 200), (0.5, 0.7))
 
-DATA_FILE = "TestSequencerUnit_test_single.txt"
+DATA_FILE = "test.txt"
 
-DATA_LENGTH = 441
+DATA_LENGTH = 44100
 
 PLOT_FILE = "test.png"
 PLOT_TIME_RANGE = (0, DATA_LENGTH/PARAMS.sample_rate)
@@ -21,3 +22,5 @@ plotter = Plotter(f"../scratch/{PLOT_FILE}", get_unit()).with_time_range(*PLOT_T
 plotter.plot()
 
 write_text_file(f"expected/{DATA_FILE}", get_unit(), DATA_LENGTH)
+
+write_wav_file(f"expected.wav", get_unit(), DATA_LENGTH)
