@@ -61,9 +61,9 @@ class TestConnection(unittest.TestCase):
         self.assertSequenceEqual(data.tolist(), [5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
 
     def test_connection_constant(self):
-        conn = Connection(5)
+        conn = Connection([5, 5])
         data = conn.get(10)
-        self.assertSequenceEqual(data.tolist(), [5]*10)
+        self.assertSequenceEqual(data.tolist(), [5, 5]*10)
 
 
 

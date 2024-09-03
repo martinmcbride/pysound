@@ -15,7 +15,7 @@ TABLE_SIZE = 65536
 @dataclass
 class Params():
     sample_rate: int = 44100
-    channels: int = 1
+    channels: int = 2
 
 PARAMS = Params()
 
@@ -46,7 +46,6 @@ class Connection:
         else:
             while len(self.data) < length:
                 extra = self.unit.get()
-                print("+++++++", self.data.shape, extra.shape)
                 self.data = np.concatenate((self.data, extra))
             value = self.data[:length]
             self.data = self.data[length:]
@@ -66,5 +65,5 @@ class DummyUnit(BaseUnit):
         self.length = length
 
     def get(self):
-        a = np.arange(5, dtype = np.double)
-        return np.arange(self.length, dtype=DATA_TYPE)
+        a = np.arange(self.length, dtype=DATA_TYPE)
+        return np.tile(a, (PARAMS.channels, 1)).transpose(1, 0)
