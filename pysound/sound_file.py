@@ -51,12 +51,12 @@ def read_text_file(filename: str):
     data = []
     with open(filename, 'r') as reader:
         for line in reader.readlines():
-            try:
-                x = float(line)
-                data.append(x)
-            except:
-                print("MISSING")
-                pass
+            line = line.strip()
+            values = line.split(" ")
+            if len(values) != PARAMS.channels:
+                raise Exception(f"Expected {PARAMS.channels} values per line, got {len(values)}")
+            x = [float(v) for v in values]
+            data.append(x)
 
     return np.array(data, dtype=DATA_TYPE)
 

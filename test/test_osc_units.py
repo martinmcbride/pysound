@@ -21,7 +21,7 @@ class TestSineUnit(unittest.TestCase):
         data = conn.get(441)
         test_data = read_text_file("expected/TestSineUnit_test_non_defaults.txt")
         compare_buffers(data, test_data)
-        
+
 
 class TestSquareUnit(unittest.TestCase):
 
@@ -38,7 +38,7 @@ class TestSquareUnit(unittest.TestCase):
         data = conn.get(441)
         test_data = read_text_file("expected/TestSquareUnit_test_non_defaults.txt")
         compare_buffers(data, test_data)
-        
+
         
 class TestSawUnit(unittest.TestCase):
 

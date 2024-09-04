@@ -9,11 +9,11 @@ from pysound.sound_file import write_text_file, write_wav_file
 PARAMS.channels = 2
 
 def get_unit():
-    return SineUnit((400, 200), (0.5, 0.7))
+    return GenericEnvelopeUnit([(441, 0.5)])
 
-DATA_FILE = "test.txt"
+DATA_FILE = "TestGenericEnvelopeUnit_test_const.txt"
 
-DATA_LENGTH = 44100
+DATA_LENGTH = 441
 
 PLOT_FILE = "test.png"
 PLOT_TIME_RANGE = (0, DATA_LENGTH/PARAMS.sample_rate)
