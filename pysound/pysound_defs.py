@@ -15,6 +15,7 @@ TABLE_SIZE = 65536
 @dataclass
 class Params():
     sample_rate: int = 44100
+    channels: int = 2
 
 PARAMS = Params()
 
@@ -33,11 +34,15 @@ class Connection:
 
     def __init__(self, unit: Unit):
         self.unit = unit
-        self.data = np.zeros(0, DATA_TYPE)
+        self.data = np.zeros((0, PARAMS.channels), DATA_TYPE)
 
     def get(self, length=DATA_LENGTH):
         if isinstance(self.unit, (int, float)):
-            return np.full(length, self.unit)
+            return np.full((length, PARAMS.channels), self.unit)
+        if isinstance(self.unit, (list, tuple)):
+            if len(self.unit) != PARAMS.channels:
+                raise ValueError(f"Connection list value has length {len(self.unit)} but number of channels is {PARAMS.channels}")
+            return np.full((length, PARAMS.channels), self.unit)
         else:
             while len(self.data) < length:
                 extra = self.unit.get()
@@ -60,5 +65,5 @@ class DummyUnit(BaseUnit):
         self.length = length
 
     def get(self):
-        a = np.arange(5, dtype = np.double)
-        return np.arange(self.length, dtype=DATA_TYPE)
+        a = np.arange(self.length, dtype=DATA_TYPE)
+        return np.tile(a, (PARAMS.channels, 1)).transpose(1, 0)
