@@ -4,9 +4,20 @@ import math  # Author:  Martin McBride
 # License: MIT
 
 import numpy as np
+from black.brackets import dataclass
 
 from pysound.pysound_defs import Unit, DATA_LENGTH, Connection, TABLE_SIZE, DATA_TYPE, PARAMS, BaseUnit
 
+
+@dataclass
+class EnvSection:
+    """
+    Represents a section of an envelope
+    """
+    length: int
+    start: float
+    end: float = None
+    exp: float = 0
 
 
 class GenericEnvelopeUnit(BaseUnit):
@@ -22,14 +33,8 @@ class GenericEnvelopeUnit(BaseUnit):
         super().__init__()
         self.sections = []
         for s in sections:
-            if len(s) == 2:
-                self.sections.append((s[0], s[1], s[1], 0))
-            elif len(s) == 3:
-                self.sections.append((s[0], s[1], s[2], 0))
-            elif len(s) == 4:
-                self.sections.append(tuple(s))
-            else:
-                ValueError("Each section must be a sequence of 2, 3, or 4 values")
+            end = s.start if s.end is None else s.end
+            self.sections.append((s.length, s.start, end, s.exp))
         self.amplitude = Connection(amplitude)
         self.current_section = 0
 
