@@ -18,8 +18,8 @@ class Plotter:
         self.title = ''
         self.image_width = 10
         self.image_height = 4
-        self.xrange = (0*PARAMS.sample_rate, int(1*PARAMS.sample_rate))
-        self.yrange = (-1, 1)
+        self.xrange = (0, 44100)
+        self.yrange = None
         self.enable_milliseconds = False
 
     def with_title(self, title: str):
@@ -56,10 +56,12 @@ class Plotter:
         time = np.linspace(0, self.xrange[1]*time_scale/PARAMS.sample_rate,
                            num=self.xrange[1])
 
-        plot.xlim(self.xrange[0]*time_scale/PARAMS.sample_rate,
-                  self.xrange[1]*time_scale/PARAMS.sample_rate)
+        if self.xrange is not None:
+            plot.xlim(self.xrange[0]*time_scale/PARAMS.sample_rate,
+                      self.xrange[1]*time_scale/PARAMS.sample_rate)
 
-        plot.ylim(*self.yrange)
+        if self.yrange is not None:
+            plot.ylim(*self.yrange)
 
         plot.plot(time, data)
 
