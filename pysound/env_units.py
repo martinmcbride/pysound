@@ -50,7 +50,7 @@ class GenericEnvelopeUnit(BaseUnit):
             out = np.column_stack((seg, seg))*a
         else:
             xvals = np.linspace(0, x1, num=x1, endpoint=False, dtype=DATA_TYPE) / x1
-            seg = y0 + (y1 - y0) * (1 - np.exp(-factor * xvals)) / (1 - math.exp(-factor)), (PARAMS.channels, 1)
+            seg = y0 + (y1 - y0) * (1 - np.exp(-factor * xvals)) / (1 - math.exp(-factor))
             out = np.column_stack((seg, seg))*a
 
         return out

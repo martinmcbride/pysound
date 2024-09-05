@@ -9,9 +9,9 @@ from pysound.sound_file import write_text_file, write_wav_file
 PARAMS.channels = 2
 
 def get_unit():
-    return SequencerUnit([SeqItem(100, 50, 0.5)], 441)
+    return GenericEnvelopeUnit([(441, 0.5, -0.6, -5)])
 
-DATA_FILE = "TestSequencerUnit_test_single.txt"
+DATA_FILE = "TestGenericEnvelopeUnit_test_negexp.txt"
 
 DATA_LENGTH = 441
 
@@ -22,5 +22,3 @@ plotter = Plotter(f"../scratch/{PLOT_FILE}", get_unit()).with_time_range(*PLOT_T
 plotter.plot()
 
 write_text_file(f"expected/{DATA_FILE}", get_unit(), DATA_LENGTH)
-
-write_wav_file(f"expected.wav", get_unit(), DATA_LENGTH)
