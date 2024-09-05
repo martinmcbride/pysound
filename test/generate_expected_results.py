@@ -9,9 +9,9 @@ from pysound.sound_file import write_text_file, write_wav_file
 PARAMS.channels = 2
 
 def get_unit():
-    return GenericEnvelopeUnit([(441, 0.5, -0.6, -5)])
+    return SineUnit(500, 0.3, 0.2, 0.5)
 
-DATA_FILE = "TestGenericEnvelopeUnit_test_negexp.txt"
+DATA_FILE = "TestSineUnit_test_non_defaults.txt"
 
 DATA_LENGTH = 441
 

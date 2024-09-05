@@ -1,7 +1,7 @@
 import unittest
 
 from pysound.osc_units import SineUnit, SquareUnit, SawUnit
-from pysound.pysound_defs import Connection
+from pysound.pysound_defs import Connection, PARAMS
 from pysound.sound_file import read_text_file
 from test.utils import compare_buffers
 
@@ -21,6 +21,15 @@ class TestSineUnit(unittest.TestCase):
         data = conn.get(441)
         test_data = read_text_file("expected/TestSineUnit_test_non_defaults.txt")
         compare_buffers(data, test_data)
+
+    def test_non_defaults_mono(self):
+        PARAMS.channels = 1
+        unit = SineUnit(500, 0.3, 0.2, 0.5)
+        conn = Connection(unit)
+        data = conn.get(441)
+        test_data = read_text_file("expected/TestSineUnit_test_non_defaults_mono.txt")
+        compare_buffers(data, test_data)
+        PARAMS.channels = 2
 
 
 class TestSquareUnit(unittest.TestCase):

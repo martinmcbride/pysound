@@ -47,10 +47,10 @@ class GenericEnvelopeUnit(BaseUnit):
 
         if abs(factor) < 0.00001:
             seg = np.linspace(y0, y1, num=x1, endpoint=False, dtype=DATA_TYPE)
-            out = np.column_stack((seg, seg))*a
+            out = np.column_stack([seg]*PARAMS.channels)*a
         else:
             xvals = np.linspace(0, x1, num=x1, endpoint=False, dtype=DATA_TYPE) / x1
             seg = y0 + (y1 - y0) * (1 - np.exp(-factor * xvals)) / (1 - math.exp(-factor))
-            out = np.column_stack((seg, seg))*a
+            out = np.column_stack([seg]*PARAMS.channels)*a
 
         return out
