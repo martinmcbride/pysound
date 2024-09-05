@@ -13,7 +13,7 @@ class GenericEnvelopeUnit(BaseUnit):
 
     def __init__(self, sections: list, amplitude: Unit=1):
         """
-        sections is a list of evelope sections. Each section is a tuple:
+        sections is a list of envelope sections. Each section is a tuple:
 
         (l, a) creates a constant level a for l samples
         (l, a, b) creates a linear ramp from a to b over l samples
@@ -36,7 +36,7 @@ class GenericEnvelopeUnit(BaseUnit):
 
     def get(self):
         if self.current_section >= len(self.sections):
-            return np.zeros(DATA_LENGTH, dtype=DATA_TYPE)
+            return np.zeros((DATA_LENGTH, PARAMS.channels), dtype=DATA_TYPE)
 
         section = self.sections[self.current_section]
         self.current_section += 1
@@ -46,9 +46,11 @@ class GenericEnvelopeUnit(BaseUnit):
         a = self.amplitude.get(x1)
 
         if abs(factor) < 0.00001:
-            out = np.linspace(y0, y1, num=x1, endpoint=False, dtype=DATA_TYPE)
+            seg = np.linspace(y0, y1, num=x1, endpoint=False, dtype=DATA_TYPE)
+            out = np.column_stack((seg, seg))*a
         else:
             xvals = np.linspace(0, x1, num=x1, endpoint=False, dtype=DATA_TYPE) / x1
-            out = y0 + (y1 - y0) * (1 - np.exp(-factor * xvals)) / (1 - math.exp(-factor))
+            seg = y0 + (y1 - y0) * (1 - np.exp(-factor * xvals)) / (1 - math.exp(-factor)), (PARAMS.channels, 1)
+            out = np.column_stack((seg, seg))*a
 
         return out

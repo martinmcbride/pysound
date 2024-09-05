@@ -21,7 +21,7 @@ class SequencerUnit(BaseUnit):
         self.duration = duration
 
     def get(self):
-        out = np.zeros(self.duration, dtype=DATA_TYPE)
+        out = np.zeros((self.duration, PARAMS.channels), dtype=DATA_TYPE)
 
         for item in self.signals:
             if item.start_time >= self.duration:
