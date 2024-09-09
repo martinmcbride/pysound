@@ -1,5 +1,5 @@
 # Generate expected results file, and a plot, for any unit
-from pysound.env_units import GenericEnvelopeUnit
+from pysound.env_units import GenericEnvelopeUnit, RampUnit
 from pysound.graph import Plotter
 from pysound.mix_units import SequencerUnit, SeqItem
 from pysound.osc_units import SineUnit, SquareUnit, SawUnit
@@ -9,9 +9,9 @@ from pysound.sound_file import write_text_file, write_wav_file
 PARAMS.channels = 2
 
 def get_unit():
-    return SineUnit(500, 0.3, 0.2, 0.5)
+    return RampUnit(441, 0, 1, 4)
 
-DATA_FILE = "TestSineUnit_test_non_defaults.txt"
+DATA_FILE = "TestRampUnit_test_exp.txt"
 
 DATA_LENGTH = 441
 

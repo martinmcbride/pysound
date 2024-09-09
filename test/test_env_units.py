@@ -1,6 +1,6 @@
 import unittest
 
-from pysound.env_units import GenericEnvelopeUnit, EnvSection
+from pysound.env_units import GenericEnvelopeUnit, EnvSection, RampUnit
 from pysound.pysound_defs import Connection, PARAMS
 from pysound.sound_file import read_text_file
 from test.utils import compare_buffers
@@ -45,3 +45,19 @@ class TestGenericEnvelopeUnit(unittest.TestCase):
         test_data = read_text_file("expected/TestGenericEnvelopeUnit_test_ramp_mono.txt")
         compare_buffers(data, test_data)
         PARAMS.channels = 2
+
+class Ramp(unittest.TestCase):
+
+    def test_default(self):
+        unit = RampUnit(441, 0, 1)
+        conn = Connection(unit)
+        data = conn.get(441)
+        test_data = read_text_file("expected/TestRampUnit_test_defaults.txt")
+        compare_buffers(data, test_data)
+
+    def test_exp(self):
+        unit = RampUnit(441, 0, 1, 4)
+        conn = Connection(unit)
+        data = conn.get(441)
+        test_data = read_text_file("expected/TestRampUnit_test_exp.txt")
+        compare_buffers(data, test_data)

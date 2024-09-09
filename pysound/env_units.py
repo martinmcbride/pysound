@@ -27,7 +27,8 @@ class EnvSection:
         length: the length of the section, in samples.
         start: the initial value of the section.
         end: the final value of the section.
-        exp: the exponential factor of the section. A positive value causes the slope to start fast and then slow down, a negative
+        exp: the exponential factor of the section. A positive value causes the slope to start fast and then slow down,\\
+        a negative value causes the slope to start slow and then speed up, 0 is linear.
         value causes the slope to start slow and speed up, zero creates a linear section.
     """
     length: int
@@ -78,3 +79,29 @@ class GenericEnvelopeUnit(BaseUnit):
             out = np.column_stack([seg]*PARAMS.channels)*a
 
         return out
+
+
+class RampUnit(BaseUnit):
+    """
+    Genertes a ramp signal that changes from a start value to an end value over a fixed time
+    """
+
+    def __init__(self, length, start, end, exp=0, amplitude: Unit=1):
+        """
+        Args:
+            length: the length of the envelope, in samples.
+            start: the initial value of the envelope.
+            end: the final value of the envelope.
+            exp: the exponential factor of the envelope. A positive value causes the slope to start fast and then slow down,\\
+            a negative value causes the slope to start slow and then speed up, 0 is linear.
+            amplitude: a signal that multiplies the envelope. Defaults to 1.
+        """
+        super().__init__()
+        sections = [
+            EnvSection(length, start, end, exp)
+        ]
+        self.envelope = GenericEnvelopeUnit(sections, amplitude)
+
+
+    def get(self):
+        return self.envelope.get()
