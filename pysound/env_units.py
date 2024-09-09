@@ -114,10 +114,11 @@ class ADUnit(BaseUnit):
 
     def __init__(self, length, attack_length, peak, exp=0, amplitude: Unit=1):
         """
+
         Args:
             length: the length of the envelope, in samples.
-            start: the initial value of the envelope.
-            end: the final value of the envelope.
+            attack_length: length of attack phase, in samples.
+            peak: peak value of signal.
             exp: the exponential factor of the envelope. A positive value causes the slope to start fast and then slow down,\\
             a negative value causes the slope to start slow and then speed up, 0 is linear.
             amplitude: a signal that multiplies the envelope. Defaults to 1.
@@ -128,6 +129,39 @@ class ADUnit(BaseUnit):
         sections = [
             EnvSection(attack_length, 0, peak, exp),
             EnvSection(length - attack_length, peak, 0, exp)
+        ]
+        self.envelope = GenericEnvelopeUnit(sections, amplitude)
+
+
+    def get(self):
+        return self.envelope.get()
+
+class ADSRUnit(BaseUnit):
+    """
+    Generates an attack/decay/sustain/release signal
+    """
+
+    def __init__(self, length, attack_length, decay_length, release_length, peak, sustain, exp=0, amplitude: Unit=1):
+        """
+        Args:
+            length: the length of the envelope, in samples.
+            attack_length: length of attack phase, in samples.
+            decay_length: length of decay phase, in samples.
+            release_length: length of release phase, in samples.
+            peak: peak value of signal.
+            sustain: sustain value of signal.
+            exp: the exponential factor of the envelope. A positive value causes the slope to start fast and then slow down,\\
+            a negative value causes the slope to start slow and then speed up, 0 is linear.
+            amplitude: a signal that multiplies the envelope. Defaults to 1.
+        """
+        super().__init__()
+        if attack_length >= length:
+            raise ValueError(f"Sum of attack, decay and release times must be less than total time {length}")
+        sections = [
+            EnvSection(attack_length, 0, peak, exp),
+            EnvSection(decay_length, peak, sustain, exp),
+            EnvSection(length - (attack_length + decay_length + release_length), sustain),
+            EnvSection(release_length, sustain, 0, exp)
         ]
         self.envelope = GenericEnvelopeUnit(sections, amplitude)
 

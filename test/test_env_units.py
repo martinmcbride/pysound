@@ -1,6 +1,6 @@
 import unittest
 
-from pysound.env_units import GenericEnvelopeUnit, EnvSection, RampUnit, ADUnit
+from pysound.env_units import GenericEnvelopeUnit, EnvSection, RampUnit, ADUnit, ADSRUnit
 from pysound.pysound_defs import Connection, PARAMS
 from pysound.sound_file import read_text_file
 from test.utils import compare_buffers
@@ -77,4 +77,20 @@ class TestADUnit(unittest.TestCase):
         conn = Connection(unit)
         data = conn.get(441)
         test_data = read_text_file("expected/TestADUnit_test_exp.txt")
+        compare_buffers(data, test_data)
+
+class TestADSRUnit(unittest.TestCase):
+
+    def test_default(self):
+        unit = ADSRUnit(441, 50, 50, 50, 1, 0.5)
+        conn = Connection(unit)
+        data = conn.get(441)
+        test_data = read_text_file("expected/TestADSRUnit_test_defaults.txt")
+        compare_buffers(data, test_data)
+
+    def test_exp(self):
+        unit = ADSRUnit(441, 50, 100, 25, 0.5, 0.2, 4)
+        conn = Connection(unit)
+        data = conn.get(441)
+        test_data = read_text_file("expected/TestADSRUnit_test_exp.txt")
         compare_buffers(data, test_data)

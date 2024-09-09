@@ -1,17 +1,15 @@
 # Generate expected results file, and a plot, for any unit
-from pysound.env_units import GenericEnvelopeUnit, RampUnit, ADUnit
+from pysound.env_units import ADSRUnit
 from pysound.graph import Plotter
-from pysound.mix_units import SequencerUnit, SeqItem
-from pysound.osc_units import SineUnit, SquareUnit, SawUnit
 from pysound.pysound_defs import PARAMS
-from pysound.sound_file import write_text_file, write_wav_file
+from pysound.sound_file import write_text_file
 
 PARAMS.channels = 2
 
 def get_unit():
-    return ADUnit(441, 300, 0.5, 4)
+    return ADSRUnit(441, 50, 100, 25, 0.5, 0.2, 4)
 
-DATA_FILE = "TestADUnit_test_exp.txt"
+DATA_FILE = "TestADSRUnit_test_exp.txt"
 
 DATA_LENGTH = 441
 
