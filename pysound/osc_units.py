@@ -11,8 +11,22 @@ from pysound.pysound_defs import Unit, DATA_LENGTH, Connection, TABLE_SIZE, DATA
 
 
 class SineUnit(BaseUnit):
+    """
+    Creates a continuous sine wave signal.
+    """
 
     def __init__(self, frequency: Unit=400, amplitude: Unit=1, offset: Unit=0, initial_phase: float=0):
+        """
+        Args:
+            frequency: A signal that controls the frequency of the unit, default 400 Hz.
+
+            amplitude: A signal that controls the amplitude of the unit, default 1.
+
+            offset: A signal that is added to the output as an offset, default 0.
+
+            initial_phase: The initial phase of the output wave, value 0.0 to 1.0 specifies phase as a fraction of a full\
+            wave. Default 0.
+        """
         super().__init__()
         self.data_length = DATA_LENGTH
         self.frequency = Connection(frequency)
@@ -39,8 +53,24 @@ class SineUnit(BaseUnit):
 
 
 class SquareUnit(BaseUnit):
+    """
+    Creates a continuous square wave signal.
+    """
 
     def __init__(self, frequency: Unit=400, amplitude: Unit=1, offset: Unit=0, ratio: Unit=0.5, initial_phase: float=0):
+        """
+        Args:
+            frequency: A signal that controls the frequency of the unit, default 400 Hz.
+
+            amplitude: A signal that controls the amplitude of the unit, default 1.
+
+            offset: A signal that is added to the output as an offset, default 0.
+
+            ratio: A signal that controls the mark-space ratio of the square wave
+
+            initial_phase: The initial phase of the output wave, value 0.0 to 1.0 specifies phase as a fraction of a full\
+            wave. Default 0.
+        """
         super().__init__()
         self.data_length = DATA_LENGTH
         self.frequency = Connection(frequency)
@@ -66,8 +96,24 @@ class SquareUnit(BaseUnit):
 
 
 class SawUnit(BaseUnit):
+    """
+    Creates a continuous saw wave signal.
+    """
 
     def __init__(self, frequency: Unit=400, amplitude: Unit=1, offset: Unit=0, ratio: Unit=0.5, initial_phase: float=0):
+        """
+        Args:
+            frequency: A signal that controls the frequency of the unit, default 400 Hz.
+
+            amplitude: A signal that controls the amplitude of the unit, default 1.
+
+            offset: A signal that is added to the output as an offset, default 0.
+
+            ratio: A signal that controls the rise-fall ratio of the saw wave
+
+            initial_phase: The initial phase of the output wave, value 0.0 to 1.0 specifies phase as a fraction of a full\
+            wave. Default 0.
+        """
         super().__init__()
         self.data_length = DATA_LENGTH
         self.frequency = Connection(frequency)
@@ -93,6 +139,9 @@ class SawUnit(BaseUnit):
 
 
 class NoiseUnit(BaseUnit):
+    """
+    Creates a continuous white noise signal.
+    """
 
     def __init__(self, amplitude: Unit=1, offset: Unit=0):
         super().__init__()
@@ -102,6 +151,12 @@ class NoiseUnit(BaseUnit):
 
 
     def get(self):
+        """
+        Args:
+            amplitude: A signal that controls the amplitude of the unit, default 1.
+
+            offset: A signal that is added to the output as an offset, default 0.
+        """
         a = self.amplitude.get(self.data_length)
         o = self.offset.get(self.data_length)
         out = o + a * (np.random.random(DATA_LENGTH) * 2 - 1)

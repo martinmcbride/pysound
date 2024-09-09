@@ -8,11 +8,27 @@ from black.brackets import dataclass
 
 from pysound.pysound_defs import Unit, DATA_LENGTH, Connection, TABLE_SIZE, DATA_TYPE, PARAMS, BaseUnit
 
+"""
+This module contains envelope units.
+"""
 
 @dataclass
 class EnvSection:
     """
-    Represents a section of an envelope
+    Represents a section of an envelope, used by `GenericEnvelopeUnit`. The section has a fixed `length` in samples.
+
+    A section has a fixed `length` in samples. It can create a constant signal, a linear ramp, or an exponential ramp:
+
+    * `EnvSection(length, start)` creates a constant section.
+    * `EnvSection(length, start, end)` creates a linear ramp.
+    * `EnvSection(length, start, end, exp)` creates an exponential ramp.
+
+    Args:
+        length: the length of the section, in samples.
+        start: the initial value of the section.
+        end: the final value of the section.
+        exp: the exponential factor of the section. A positive value causes the slope to start fast and then slow down, a negative
+        value causes the slope to start slow and speed up, zero creates a linear section.
     """
     length: int
     start: float
@@ -21,14 +37,17 @@ class EnvSection:
 
 
 class GenericEnvelopeUnit(BaseUnit):
+    """
+    This is a generic envelope unit that can create a wide variety of envelopes defined by a list of `EnvSection` objects.
+    """
 
     def __init__(self, sections: list, amplitude: Unit=1):
         """
-        sections is a list of envelope sections. Each section is a tuple:
+        Args:
+            sections: a list of `EnvSection` objects, each defining a section of the envelope of a particular length in samples.\
+            Sections are appended back to back. To create gaps, add a constant section with value 0.
 
-        (l, a) creates a constant level a for l samples
-        (l, a, b) creates a linear ramp from a to b over l samples
-        (l, a, b, f) creates an exponential ramp from a to b with curve factor f over l samples
+            amplitude: a signal that multiplies the envelope. Defaults to 1.
         """
         super().__init__()
         self.sections = []

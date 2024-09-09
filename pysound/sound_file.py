@@ -10,11 +10,16 @@ import numpy as np
 from pysound.pysound_defs import PARAMS, Connection, Unit, DATA_TYPE
 
 
-def write_wav_file(filename: str, source: Unit, samples: int):
-    '''
-    Write a sequence of samples as a WAV file
-    Currently a 16 bit mono file
-    '''
+def write_wav_file(filename: str, source: Unit, length: int):
+    """
+    Write a sequence of samples as a WAV file.
+
+    Args:
+        filename: Full path of file to write
+        source: unit that will be used to create sound
+        length: required length of file in samples
+
+    """
     conn = Connection(source)
     with wave.open(filename, 'wb') as writer:
         # Set the WAV file parameters, currently default values
@@ -22,12 +27,20 @@ def write_wav_file(filename: str, source: Unit, samples: int):
         writer.setsampwidth(2)
         writer.setframerate(PARAMS.sample_rate)
         data_out = array.array('h')
-        for x in conn.get(samples):
-            data_out.append(int(x[0] * 32766))
-            data_out.append(int(x[1] * 32766))
+        for x in conn.get(length):
+            for i in range(PARAMS.channels):
+                data_out.append(int(x[i] * 32766))
         writer.writeframes(data_out)
 
 def write_text_file(filename: str, source: Unit, samples: int):
+    """
+    Write a sequence of samples as a text file
+
+        filename: Full path of file to write
+        source: unit that will be used to create sound
+        length: required length of file in samples
+
+    """
     '''
     Write a sequence of samples as a text file
     '''
@@ -40,14 +53,20 @@ def write_text_file(filename: str, source: Unit, samples: int):
             writer.write(f"\n")
 
 def read_text_file(filename: str):
-    '''
-    Read a sequence of samples from a text file, stored one per line in format:
+    """
+    Reads sound data from a text file of numerical values.
+    The file should contain one sample per line, so
 
-    -0.30598718268393843
-    -0.47033054373828387
-    0.41079667568696454
-    ...
-    '''
+    * If it is a mono file, each line should contain one numerical value
+    * If it is a sterea file, each line should contain two numerical values, separated by a space.
+
+    Args:
+        filename: full path of data file to read
+
+    Returns:
+        numpy array of audio data
+
+    """
     data = []
     with open(filename, 'r') as reader:
         for line in reader.readlines():
