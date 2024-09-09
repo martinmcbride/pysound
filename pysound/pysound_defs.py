@@ -30,7 +30,7 @@ class Params():
 PARAMS = Params()
 
 def t2s(time):
-    return time*PARAMS.sample_rate
+    return int(time*PARAMS.sample_rate)
 
 class BaseUnit:
     """
