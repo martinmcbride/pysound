@@ -1,18 +1,21 @@
-# PySound
+# pysound
 
 NOTE - currently undergoing a fairly major re-write to improve overall design. Existing references and tutorials are out of date.
 
-A Python library for creating digital sound and music.
+pysound is a pure Python library for creating digital sound and music.
 
-PySound uses numpy arrays to store and process sound.
+Features include:
 
-Features:
+* Based on a sound unit architecture.
+* Covers every stage of sound creation:
+  * Basic sound processors: oscillators, envelopes, filters, etc.
+  * Instrument or effect design.
+  * Mixing and sequencing.
+  * Production.
+* However, it doesn't have to do everything. Sounds can be interchanged with other systems at any stage in the process.
+* It is extremely easy to write your own units in Python.
+* Extra processes, for example computer composing, automated mixing etc can be implemented in Python.
+* Your complete song or sound project will be written as a pure python program.
 
-* Oscillators - sine, saw, square, wave table and noise
-* Envelopes - ramp, attack-decay, generic envelope
-* Effects - echo
-* Mixers - add, multiply
-* Sequencers - join sounds, basic sound sequencer
-* Output - WAV file
-* Graph - plot sound waves
+PySound uses numpy arrays to store and process sound. This allows for efficient processing, and also allows other libraries, for example SciPy, to be integrated easily.
 
