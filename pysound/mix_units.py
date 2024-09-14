@@ -3,7 +3,7 @@ from dataclasses import dataclass
 
 import numpy as np
 
-from pysound.pysound_defs import Connection, TABLE_SIZE, PARAMS, BaseUnit, DATA_TYPE, Unit
+from pysound.pysound_defs import Connection, TABLE_SIZE, PARAMS, BaseUnit, DATA_TYPE, Unit, DATA_LENGTH
 
 
 @dataclass
@@ -19,8 +19,13 @@ class SequencerUnit(BaseUnit):
         super().__init__()
         self.signals = signals
         self.duration = duration
+        self.first = True
 
     def get(self):
+        # After first call, just return zeros
+        if not self.first:
+            return np.zeros((DATA_LENGTH, PARAMS.channels), dtype=DATA_TYPE)
+
         out = np.zeros((self.duration, PARAMS.channels), dtype=DATA_TYPE)
 
         for item in self.signals:
@@ -32,6 +37,8 @@ class SequencerUnit(BaseUnit):
             conn = Connection(item.unit)
             content = conn.get(duration)
             out[item.start_time:item.start_time+duration] += content
+
+        self.first = False
 
         return out
 

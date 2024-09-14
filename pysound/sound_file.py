@@ -6,8 +6,9 @@
 import wave
 import array
 import numpy as np
+from scipy.io import wavfile
 
-from pysound.pysound_defs import PARAMS, Connection, Unit, DATA_TYPE
+from pysound.pysound_defs import PARAMS, Connection, Unit, DATA_TYPE, BaseUnit, DATA_LENGTH
 
 
 def write_wav_file(filename: str, source: Unit, length: int):
@@ -51,6 +52,31 @@ def write_text_file(filename: str, source: Unit, samples: int):
             for i in range(PARAMS.channels):
                 writer.write(f"{x[i]:.8f} ")
             writer.write(f"\n")
+
+class FileInputUnit(BaseUnit):
+
+    def __init__(self, filename: str):
+        super().__init__()
+        self.filename = filename
+        self.first = True
+
+    def get(self):
+        # After first call, just return zeros
+        if not self.first:
+            return np.zeros((DATA_LENGTH, PARAMS.channels), dtype=DATA_TYPE)
+        self.first = False
+
+        samplerate, data = wavfile.read(self.filename)
+        return data
+
+def check_wav_file(filename: str):
+    samplerate, data = wavfile.read(filename)
+    print("File: {filename}")
+    print(f"Sample rate: {samplerate}")
+    print(f"Number of channels: {data.shape[1]}")
+    print(f"Length (samples): {data.shape[0]}")
+    print(f"Length (seconds): {data.shape[0]/samplerate}")
+    print(f"Data type: {data.dtype}")
 
 def read_text_file(filename: str):
     """
