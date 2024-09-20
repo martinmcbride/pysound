@@ -53,7 +53,7 @@ def write_text_file(filename: str, source: Unit, samples: int):
                 writer.write(f"{x[i]:.8f} ")
             writer.write(f"\n")
 
-class FileInputUnit(BaseUnit):
+class AudioFileInputUnit(BaseUnit):
 
     def __init__(self, filename: str):
         super().__init__()
@@ -67,7 +67,7 @@ class FileInputUnit(BaseUnit):
         self.first = False
 
         samplerate, data = wavfile.read(self.filename)
-        return data
+        return data/32767
 
 def check_wav_file(filename: str):
     samplerate, data = wavfile.read(filename)
