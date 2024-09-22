@@ -103,3 +103,40 @@ class DummyUnit(BaseUnit):
     def get(self):
         a = np.arange(self.length, dtype=DATA_TYPE)
         return np.tile(a, (PARAMS.channels, 1)).transpose(1, 0)
+
+
+class BufferUnit(BaseUnit):
+
+    def __init__(self, source: Unit):
+        """
+        Args:
+            length: Length of repeat pattern.
+        """
+        super().__init__()
+        self.source = Connection(source)
+        self.blocks = []
+
+    def get(self):
+        raise NotImplemented("BufferUnit.get() cannot be called directly")
+
+    def get_for_reader(self, reader):
+        while len(self.blocks) <= reader.block_count:
+            self.blocks.append(self.source.get(DATA_LENGTH))
+        return self.blocks[reader.block_count]
+
+
+class BufferReaderUnit(BaseUnit):
+
+    def __init__(self, source: BufferUnit):
+        """
+        Args:
+            length: Length of repeat pattern.
+        """
+        super().__init__()
+        self.source = source
+        self.block_count = 0
+
+    def get(self):
+        data = self.source.get_for_reader(self)
+        self.block_count += 1
+        return data
